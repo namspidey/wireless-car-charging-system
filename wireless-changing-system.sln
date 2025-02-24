@@ -5,6 +5,10 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wireless-changing-system", "wireless-changing-system\wireless-changing-system.csproj", "{77F06510-A78B-41A6-AB5A-67B186FF6DD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{CBF2546C-73EB-4BDA-B19D-53B5AD1F74E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{77F06510-A78B-41A6-AB5A-67B186FF6DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F06510-A78B-41A6-AB5A-67B186FF6DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F06510-A78B-41A6-AB5A-67B186FF6DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF2546C-73EB-4BDA-B19D-53B5AD1F74E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF2546C-73EB-4BDA-B19D-53B5AD1F74E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF2546C-73EB-4BDA-B19D-53B5AD1F74E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF2546C-73EB-4BDA-B19D-53B5AD1F74E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
