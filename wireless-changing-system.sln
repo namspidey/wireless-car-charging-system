@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wireless-changing-system", "wireless-changing-system\wireless-changing-system.csproj", "{77F06510-A78B-41A6-AB5A-67B186FF6DD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wireless-charging-system", "wireless-changing-system\wireless-charging-system.csproj", "{77F06510-A78B-41A6-AB5A-67B186FF6DD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3C888E61-C3DF-46D4-94C5-A8B12545A3CF}"
 EndProject

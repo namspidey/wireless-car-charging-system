@@ -18,4 +18,11 @@
     <None Remove="Model\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Wireless_charging\Auth\" />
+    <Folder Include="Pages\Wireless_charging\Vehicles\" />
+    <Folder Include="Pages\Wireless_charging\Stations\" />
+    <Folder Include="Pages\Wireless_charging\Profile\" />
+  </ItemGroup>
+
 </Project>
