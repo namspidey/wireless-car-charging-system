@@ -22,8 +22,4 @@
     <None Remove="Pages\Wireless_charging\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Wireless-charging\Auth\" />
-  </ItemGroup>
-
 </Project>
