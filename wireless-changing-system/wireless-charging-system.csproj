@@ -10,19 +10,16 @@
   <ItemGroup>
     <Compile Remove="API\**" />
     <Compile Remove="Model\**" />
+    <Compile Remove="Pages\Wireless_charging\**" />
     <Content Remove="API\**" />
     <Content Remove="Model\**" />
+    <Content Remove="Pages\Wireless_charging\**" />
     <EmbeddedResource Remove="API\**" />
     <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="Pages\Wireless_charging\**" />
     <None Remove="API\**" />
     <None Remove="Model\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Wireless_charging\Auth\" />
-    <Folder Include="Pages\Wireless_charging\Vehicles\" />
-    <Folder Include="Pages\Wireless_charging\Stations\" />
-    <Folder Include="Pages\Wireless_charging\Profile\" />
+    <None Remove="Pages\Wireless_charging\**" />
   </ItemGroup>
 
 </Project>
