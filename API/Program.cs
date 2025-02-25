@@ -1,6 +1,7 @@
 ﻿using API.Services;
 using DataAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Repositories;
 using DataAccess.Repositories.TestRepo;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<WccsContext>(options =>
 
 builder.Services.AddScoped<ITest, Test>(); // Đăng ký đúng class thực thi
 builder.Services.AddScoped<TestService>();
+builder.Services.AddScoped<IChargingStationRepository, ChargingStationRepository>();
+builder.Services.AddScoped<ChargingStationService>();
 
 
 builder.Services.AddControllers();
