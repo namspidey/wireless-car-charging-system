@@ -1,3 +1,5 @@
+﻿@import "~/bootstrap-icons/font/bootstrap-icons.css";
+@import "~/bootstrap-icons/font/bootstrap-icons.min.css"
 html {
   font-size: 14px;
 }
@@ -18,5 +20,177 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: antiquewhite;
+}
+.feature-icon {
+    font-size: 2.5rem;
+    color: #0d6efd;
+}
+
+.section {
+    padding: 5rem 0;
+}
+.bgsmoke {
+    background-color: whitesmoke;
+    margin-top: 20px;
+}
+.hero-section {
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../img/bg1.png);
+    background-size: cover;
+    background-position: center;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+.charging-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Giảm kích thước các hình trang trí */
+    .charging-section::before {
+        width: 150px;
+        height: 150px;
+        top: -30px;
+        right: -30px;
+    }
+
+    .charging-section::after {
+        width: 180px;
+        height: 180px;
+        bottom: -50px;
+        left: -20px;
+    }
+
+.charging-cta {
+    font-size: 1rem;
+    padding: 0.8rem 2rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .charging-section {
+        padding: 2.5rem 0;
+    }
+
+    h2 {
+        font-size: 1.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .lead {
+        font-size: 1rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .charging-cta {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Ẩn các hình trang trí trên mobile */
+    .charging-section::before,
+    .charging-section::after {
+        display: none;
+    }
+}
+.feature-card,
+.feature-card1 {
+    background-size: cover;
+    background-position: center;
+    min-height: 50vh;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.feature-card {
+    background-image: url(../img/bg2.jpg);
+}
+
+.feature-card1 {
+    background-image: url(../img/bg3.png);
+}
+
+
+@media (max-width: 768px) {
+    .feature-card,
+    .feature-card1 {
+        min-height: 45vh;
+        margin: 0.5rem;
+    }
+}
+.footer {
+    background: #2c3e50;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+    .social-icons a {
+        color: white;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+        }
+
+.bi-facebook:hover {
+    color: #1877f2;
+}
+
+.bi-twitter:hover {
+    color: #1877f2;
+}
+
+.bi-instagram:hover {
+    color: #e4405f;
+}
+
+.bi-youtube:hover {
+    color: #ff0000;
+}
+.bi-linkedin:hover {
+    color: #1877f2;
+}
+
+.copyright {
+    color: white;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .social-icons {
+        gap: 1.5rem;
+    }
+
+        .social-icons a {
+            font-size: 1.8rem;
+        }
 }
