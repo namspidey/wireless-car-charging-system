@@ -194,3 +194,146 @@ body {
             font-size: 1.8rem;
         }
 }
+.login-card {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-control-lg {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+}
+
+.btn-primary {
+    background: #1877f2;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background: #166fe5;
+        transform: translateY(-2px);
+    }
+
+.btn-outline-success {
+    border: 2px solid #42b72a;
+    color: #42b72a;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-success:hover {
+        background: #42b72a;
+        color: white;
+    }
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .col-md-6:first-child {
+        margin-bottom: 3rem;
+    }
+
+    .login-card {
+        width: 100%;
+        padding: 1.5rem;
+    }
+    .LoginLogo {
+        width: 120px;
+        height: 100px;
+    }
+    .hide-mobile {
+        display: none;
+    }
+    .auth-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .provider-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-adobe {
+            background: #FF0000;
+            color: white;
+        }
+
+        .btn-google {
+            background: #4285F4;
+            color: white;
+        }
+
+        .btn-amazon {
+            background: #FF9900;
+            color: white;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+            margin: auto 1rem;
+        }
+    .mobi-margin-top {
+        margin-top: 20px;
+    }
+}
+.forgot-card {
+    background-color: white;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.otp-input {
+    width: 50px;
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+.otp-card {
+    max-width: 500px;
+    margin: 80px auto;
+    border-radius: 8px;
+}
+.send-otp-card {
+    background-color: white;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.new-password-card {
+    background-color: white;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}

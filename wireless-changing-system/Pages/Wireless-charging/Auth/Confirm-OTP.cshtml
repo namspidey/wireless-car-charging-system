@@ -1,0 +1,38 @@
+﻿@page
+@model wireless_changing_system.Pages.Wireless_charging.Auth.Confirm_OTPModel
+@{
+}
+<div class="container">
+    <div class="card otp-card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title fw-bold mb-3">Enter security code</h4>
+            <p class="mb-3">
+                Please check your emails for a message with your code.
+                Your code is 6 numbers long.
+            </p>
+
+            <!-- Các ô nhập mã bảo mật -->
+            <div class="d-flex gap-2 justify-content-center mb-3">
+                <input type="text" class="form-control otp-input" maxlength="1" />
+                <input type="text" class="form-control otp-input" maxlength="1" />
+                <input type="text" class="form-control otp-input" maxlength="1" />
+                <input type="text" class="form-control otp-input" maxlength="1" />
+                <input type="text" class="form-control otp-input" maxlength="1" />
+                <input type="text" class="form-control otp-input" maxlength="1" />
+            </div>
+
+            <p>We sent your code to: <strong>a@example.com</strong></p>
+
+            <hr />
+
+            <!-- Khu vực liên kết & nút -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <a href="#">Resent code</a>
+                <div>
+                    <button type="button" class="btn btn-secondary me-2">Cancel</button>
+                    <button type="button" class="btn btn-primary">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
