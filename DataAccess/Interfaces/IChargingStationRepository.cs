@@ -1,4 +1,4 @@
-﻿using DataAccess.DTOs;
+﻿using DataAccess.DTOs.ChargingStation;
 using DataAccess.Repositories;
 
 namespace DataAccess.Interfaces

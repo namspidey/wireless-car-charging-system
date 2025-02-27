@@ -1,4 +1,4 @@
-﻿using DataAccess.DTOs;
+﻿using DataAccess.DTOs.ChargingStation;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,6 @@ namespace DataAccess.Repositories
                 .Select(cp => new ChargingPointDto
                 {
                     ChargingPointId = cp.ChargingPointId,
-                    StationId = cp.StationId,
                     ChargingPointName = cp.ChargingPointName,
                     Description = cp.Description,
                     Status = cp.Status,
@@ -48,7 +47,6 @@ namespace DataAccess.Repositories
                 .Select(cp => new ChargingPointDto
                 {
                     ChargingPointId = cp.ChargingPointId,
-                    StationId = cp.StationId,
                     ChargingPointName = cp.ChargingPointName,
                     Description = cp.Description,
                     Status = cp.Status,

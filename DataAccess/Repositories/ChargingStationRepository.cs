@@ -1,4 +1,4 @@
-﻿using DataAccess.DTOs;
+﻿using DataAccess.DTOs.ChargingStation;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
@@ -113,6 +113,8 @@ namespace DataAccess.Repositories
                     Address = cs.StationLocation.Address,
                     Longtitude = cs.StationLocation.Longitude,
                     Latitude = cs.StationLocation.Latitude,
+                    TotalPoint = cs.ChargingPoints.Count(),
+                    AvailablePoint = cs.ChargingPoints.Count(cp => cp.Status == "Available"),
                     CreateAt = cs.CreateAt,
                     UpdateAt = cs.UpdateAt,
                     MaxConsumPower = cs.MaxConsumPower

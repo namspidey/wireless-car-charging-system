@@ -1,5 +1,5 @@
 ﻿using API.Services;
-using DataAccess.DTOs;
+using DataAccess.DTOs.ChargingStation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -24,10 +24,16 @@ namespace API.Controllers
 
 
         [HttpGet("Detail/{stationId}")]
-        public ActionResult getChargingStationById(int stationId)
+        public ActionResult GetStationDetails(int stationId)
         {
-            var station = _stationService.GetChargingStationById(stationId);
-            return new JsonResult(station);
+            var stationDetails = _stationService.GetStationDetails(stationId);
+
+            if (stationDetails == null)
+            {
+                return NotFound(new { message = "Station not found" });
+            }
+
+            return Ok(stationDetails);
         }
 
         [HttpPost("Add")]

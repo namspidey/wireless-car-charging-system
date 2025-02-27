@@ -1,4 +1,4 @@
-﻿namespace DataAccess.DTOs
+﻿namespace DataAccess.DTOs.ChargingStation
 {
     public class ChargingStationDto
     {
@@ -10,7 +10,7 @@
         public decimal Longtitude { get; set; }
         public decimal Latitude { get; set; }
         public double? Distance { get; set; }
-        public int TotalPoint {  get; set; }
+        public int TotalPoint { get; set; }
         public int AvailablePoint { get; set; }
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }

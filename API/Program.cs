@@ -16,6 +16,7 @@ builder.Services.AddScoped<ITest, Test>(); // Đăng ký đúng class thực thi
 builder.Services.AddScoped<TestService>();
 builder.Services.AddScoped<IChargingStationRepository, ChargingStationRepository>();
 builder.Services.AddScoped<ChargingStationService>();
+builder.Services.AddScoped<IChargingPointRepository, ChargingPointRepository>();
 
 
 builder.Services.AddControllers();
