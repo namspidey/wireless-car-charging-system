@@ -1,10 +1,11 @@
 ﻿using DataAccess.DTOs;
+using DataAccess.Repositories;
 
 namespace DataAccess.Interfaces
 {
     public interface IChargingStationRepository
     {
-        List<ChargingStationDto>? GetAllStation(string? keyword);
+        PagedResult<ChargingStationDto>? GetAllStation(string? keyword, decimal? userLat, decimal? userLng, int page, int pageSize);
         ChargingStationDto GetStationById(int stationId);
         void SaveStation(NewChargingStationDto s);
         void UpdateStation(UpdateChargingStationDto s);

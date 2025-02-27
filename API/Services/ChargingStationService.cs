@@ -1,5 +1,6 @@
 ﻿using DataAccess.DTOs;
 using DataAccess.Interfaces;
+using DataAccess.Repositories;
 
 namespace API.Services
 {
@@ -12,9 +13,9 @@ namespace API.Services
             _repository = repository;
         }
 
-        public List<ChargingStationDto> GetChargingStations(string? keyword)
+        public PagedResult<ChargingStationDto> GetChargingStations(string? keyword, decimal userLat, decimal userLng, int page, int pageSize)
         {
-            return _repository.GetAllStation(keyword);
+            return _repository.GetAllStation(keyword, userLat, userLng, page, pageSize);
         }
 
         public ChargingStationDto GetChargingStationById(int stationId)

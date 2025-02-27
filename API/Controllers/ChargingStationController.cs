@@ -16,11 +16,12 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult getChargingStation(string? keyword)
+        public ActionResult GetChargingStations(string? keyword, decimal userLat, decimal userLng, int page = 1, int pageSize = 2)
         {
-            var stations = _stationService.GetChargingStations(keyword);
+            var stations = _stationService.GetChargingStations(keyword, userLat, userLng, page, pageSize);
             return new JsonResult(stations);
         }
+
 
         [HttpGet("Detail/{stationId}")]
         public ActionResult getChargingStationById(int stationId)
