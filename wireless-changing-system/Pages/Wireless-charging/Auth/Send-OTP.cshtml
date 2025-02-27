@@ -1,0 +1,43 @@
+﻿@page
+@model wireless_changing_system.Pages.Wireless_charging.Auth.Send_OTPModel
+@{
+}
+<div class="container">
+    <div class="send-otp-card shadow-sm " >
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">Reset Your Password</h4>
+            <hr />
+
+            <!-- Khu vực "Send code via" -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- Cột trái: Radio + Email -->
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="SendOption" id="sendEmail" value="email" checked>
+                        <label class="form-check-label" for="sendEmail">
+                            Send code via email
+                        </label>
+                    </div>
+                    <p class="text-muted mb-0">a@example.com</p>
+                </div>
+
+                <!-- Cột phải: Avatar + Tên người dùng -->
+                <div class="d-flex flex-column align-items-center">
+                    <img src="~/img/female.png" alt="User Avatar"
+                         class="avatar mb-2"
+                         style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                    <span class="fw-semibold">UserName</span>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <!-- Nút bấm -->
+            <div class="d-flex justify-content-between mt-3">
+                <button type="button" class="btn btn-secondary">Not You?</button>
+                <button type="button" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
