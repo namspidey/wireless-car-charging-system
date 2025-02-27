@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.Models;
 
@@ -47,20 +46,14 @@ public partial class WccsContext : DbContext
     public virtual DbSet<UserCar> UserCars { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var builder = new ConfigurationBuilder()
-                              .SetBasePath(Directory.GetCurrentDirectory())
-                              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        IConfigurationRoot configuration = builder.Build();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("value"));
-    }
-        
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-BSNJ285Q;Initial Catalog=WCCS;User ID=sa;Password=123456;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Balance>(entity =>
         {
-            entity.HasKey(e => e.BalanceId).HasName("PK__Balance__18188B5B8DE780AB");
+            entity.HasKey(e => e.BalanceId).HasName("PK__Balance__18188B5BA5F35DDB");
 
             entity.ToTable("Balance");
 
@@ -77,7 +70,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<BalanceTransaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Balance___85C600AF0C91E508");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Balance___85C600AF9BF1309E");
 
             entity.ToTable("Balance_transactions");
 
@@ -97,7 +90,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<Car>(entity =>
         {
-            entity.HasKey(e => e.CarId).HasName("PK__car__4C9A0DB3138894E7");
+            entity.HasKey(e => e.CarId).HasName("PK__car__4C9A0DB3D7545178");
 
             entity.ToTable("car");
 
@@ -122,7 +115,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<CarModel>(entity =>
         {
-            entity.HasKey(e => e.CarModelId).HasName("PK__car_mode__6F9B2377C170FA92");
+            entity.HasKey(e => e.CarModelId).HasName("PK__car_mode__6F9B23772FC7E744");
 
             entity.ToTable("car_model");
 
@@ -142,6 +135,10 @@ public partial class WccsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("color");
             entity.Property(e => e.CreateAt).HasColumnName("create_at");
+            entity.Property(e => e.Img)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("img");
             entity.Property(e => e.MaxChargingPower).HasColumnName("max_charging_power");
             entity.Property(e => e.SeatNumber).HasColumnName("seat_number");
             entity.Property(e => e.Type)
@@ -153,7 +150,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<ChargingPoint>(entity =>
         {
-            entity.HasKey(e => e.ChargingPointId).HasName("PK__charging__D7F59537A042B53C");
+            entity.HasKey(e => e.ChargingPointId).HasName("PK__charging__D7F59537E2B09CF9");
 
             entity.ToTable("charging_point");
 
@@ -182,7 +179,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<ChargingSession>(entity =>
         {
-            entity.HasKey(e => e.SessionId).HasName("PK__charging__69B13FDC5506061D");
+            entity.HasKey(e => e.SessionId).HasName("PK__charging__69B13FDC66AD0FBD");
 
             entity.ToTable("charging_session");
 
@@ -214,7 +211,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<ChargingStation>(entity =>
         {
-            entity.HasKey(e => e.StationId).HasName("PK__charging__44B370E977B27173");
+            entity.HasKey(e => e.StationId).HasName("PK__charging__44B370E9AF6D4BCC");
 
             entity.ToTable("charging_station");
 
@@ -243,7 +240,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CDBA10EB9");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CF7DCF8DF");
 
             entity.ToTable("Feedback");
 
@@ -261,7 +258,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__payment__ED1FC9EAD9785796");
+            entity.HasKey(e => e.PaymentId).HasName("PK__payment__ED1FC9EACF54760C");
 
             entity.ToTable("payment");
 
@@ -290,7 +287,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<RealTimeDatum>(entity =>
         {
-            entity.HasKey(e => e.DataId).HasName("PK__Real_Tim__F5A76B3BF07826CF");
+            entity.HasKey(e => e.DataId).HasName("PK__Real_Tim__F5A76B3B9D3E20B5");
 
             entity.ToTable("Real_Time_Data");
 
@@ -315,7 +312,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.HasKey(e => e.TokenId).HasName("PK__refresh___CB3C9E172E98CBBF");
+            entity.HasKey(e => e.TokenId).HasName("PK__refresh___CB3C9E17E85AFC2E");
 
             entity.ToTable("refresh_tokens");
 
@@ -336,7 +333,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__roles__760965CC5694A68B");
+            entity.HasKey(e => e.RoleId).HasName("PK__roles__760965CC89CFB5B7");
 
             entity.ToTable("roles");
 
@@ -349,7 +346,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<StationLocation>(entity =>
         {
-            entity.HasKey(e => e.StationLocationId).HasName("PK__station___0CE32FE70FCDCD90");
+            entity.HasKey(e => e.StationLocationId).HasName("PK__station___0CE32FE7AC343AA5");
 
             entity.ToTable("station_location");
 
@@ -374,13 +371,13 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__users__B9BE370F7F4BCA73");
+            entity.HasKey(e => e.UserId).HasName("PK__users__B9BE370F1EB7E2C0");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.PhoneNumber, "UQ__users__A1936A6B762ACD0C").IsUnique();
+            entity.HasIndex(e => e.PhoneNumber, "UQ__users__A1936A6B2C3AEFA7").IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__users__AB6E6164873DB069").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__users__AB6E61646CDEC1BC").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.CreateAt).HasColumnName("create_at");
@@ -415,7 +412,7 @@ public partial class WccsContext : DbContext
 
         modelBuilder.Entity<UserCar>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.CarId }).HasName("PK__user_car__9D7797D4BE4862AD");
+            entity.HasKey(e => new { e.UserId, e.CarId }).HasName("PK__user_car__9D7797D46BB39861");
 
             entity.ToTable("user_car");
 
