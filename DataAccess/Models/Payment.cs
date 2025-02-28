@@ -7,9 +7,9 @@ public partial class Payment
 {
     public int PaymentId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
-    public int? SessionId { get; set; }
+    public int SessionId { get; set; }
 
     public double? Amount { get; set; }
 
@@ -19,7 +19,7 @@ public partial class Payment
 
     public DateTime? PaymentDate { get; set; }
 
-    public virtual ChargingSession? Session { get; set; }
+    public virtual ChargingSession Session { get; set; } = null!;
 
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; } = null!;
 }

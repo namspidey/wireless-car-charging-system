@@ -7,7 +7,7 @@ public partial class ChargingPoint
 {
     public int ChargingPointId { get; set; }
 
-    public int? StationId { get; set; }
+    public int StationId { get; set; }
 
     public string? ChargingPointName { get; set; }
 
@@ -27,5 +27,5 @@ public partial class ChargingPoint
 
     public virtual ICollection<RealTimeDatum> RealTimeData { get; set; } = new List<RealTimeDatum>();
 
-    public virtual ChargingStation? Station { get; set; }
+    public virtual ChargingStation Station { get; set; } = null!;
 }

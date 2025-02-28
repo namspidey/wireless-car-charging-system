@@ -7,9 +7,9 @@ public partial class ChargingStation
 {
     public int StationId { get; set; }
 
-    public int? OwnerId { get; set; }
+    public int OwnerId { get; set; }
 
-    public int? StationLocationId { get; set; }
+    public int StationLocationId { get; set; }
 
     public string? StationName { get; set; }
 
@@ -23,7 +23,7 @@ public partial class ChargingStation
 
     public virtual ICollection<ChargingPoint> ChargingPoints { get; set; } = new List<ChargingPoint>();
 
-    public virtual User? Owner { get; set; }
+    public virtual User Owner { get; set; } = null!;
 
-    public virtual StationLocation? StationLocation { get; set; }
+    public virtual StationLocation StationLocation { get; set; } = null!;
 }
