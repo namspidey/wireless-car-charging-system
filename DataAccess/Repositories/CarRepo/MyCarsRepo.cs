@@ -1,4 +1,4 @@
-﻿using DataAccess.DTO;
+﻿using DataAccess.DTOs;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using System;

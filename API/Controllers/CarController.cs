@@ -1,5 +1,5 @@
 ﻿using API.Services;
-using DataAccess.DTO;
+using DataAccess.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
