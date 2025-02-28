@@ -5,9 +5,13 @@ namespace DataAccess.Models;
 
 public partial class User
 {
+    public User()
+    {
+    }
+
     public int UserId { get; set; }
 
-    public int? RoleId { get; set; }
+    public int RoleId { get; set; }
 
     public string? Fullname { get; set; }
 
@@ -16,6 +20,8 @@ public partial class User
     public string PhoneNumber { get; set; } = null!;
 
     public DateTime? Dob { get; set; }
+
+    public bool? Gender { get; set; }
 
     public string? PasswordHash { get; set; }
 
@@ -37,7 +43,7 @@ public partial class User
 
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 
-    public virtual Role? Role { get; set; }
+    public virtual Role Role { get; set; } = null!;
 
     public virtual ICollection<UserCar> UserCars { get; set; } = new List<UserCar>();
 }

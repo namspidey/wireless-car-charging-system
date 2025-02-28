@@ -7,7 +7,7 @@ public partial class Balance
 {
     public int BalanceId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public double? Balance1 { get; set; }
 
@@ -17,5 +17,5 @@ public partial class Balance
 
     public virtual ICollection<BalanceTransaction> BalanceTransactions { get; set; } = new List<BalanceTransaction>();
 
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; } = null!;
 }

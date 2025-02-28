@@ -1,9 +1,11 @@
 ﻿using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
@@ -13,7 +15,7 @@ namespace API.Controllers
         public TestController(TestService testService) {
             _testService = testService;
         }
-
+        [Authorize("Admin")]
         [HttpGet]
         public ActionResult getAllRoles()
         {
