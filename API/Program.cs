@@ -18,6 +18,18 @@ builder.Services.AddScoped<TestService>();
 builder.Services.AddScoped<IMyCars, MyCarsRepo>(); 
 builder.Services.AddScoped<CarService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5216") // Allow your frontend URL
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -33,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

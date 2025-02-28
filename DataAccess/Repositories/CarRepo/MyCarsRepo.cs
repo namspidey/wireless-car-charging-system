@@ -42,7 +42,7 @@ namespace DataAccess.Repositories.CarRepo
         {
             var carDetail = (from c in _context.Cars
                              join cm in _context.CarModels on c.CarModelId equals cm.CarModelId
-                             where c.CarId == carId
+                             where c.CarId == carId && c.IsDeleted == false
                              select new CarDetailDTO
                              {
                                  CarId = c.CarId,
@@ -104,6 +104,7 @@ namespace DataAccess.Repositories.CarRepo
                         {
                             SessionId = cs.SessionId,
                             CarId = cs.CarId,
+                            CarName = c.CarName,
                             LicensePlate = c.LicensePlate,
                             ChargingPointId = cs.ChargingPointId,
                             StationName = s.StationName,
@@ -115,19 +116,25 @@ namespace DataAccess.Repositories.CarRepo
                             Status = cs.Status
                         };
 
-            
-            if (start.HasValue)
+
+            if (start.HasValue && end.HasValue)
             {
-                query = query.Where(cs => cs.StartTime >= start.Value);
+                query = query.Where(cs => cs.StartTime >= start.Value && (cs.EndTime <= end.Value ));
+            }
+            else
+            {
+                if (start.HasValue && !end.HasValue)
+                {
+                    query = query.Where(cs => cs.StartTime >= start.Value);
+                }
+
+                if (end.HasValue && !start.HasValue)
+                {
+                    query = query.Where(cs => cs.EndTime <= end.Value );
+                }
             }
 
-            
-            if (end.HasValue)
-            {
-                query = query.Where(cs => cs.EndTime <= end.Value || cs.EndTime == null);
-            }
 
-            
             if (chargingStationId.HasValue)
             {
                 query = query.Where(cs => cs.StationId == chargingStationId.Value);
@@ -136,5 +143,14 @@ namespace DataAccess.Repositories.CarRepo
             return query.OrderByDescending(cs => cs.StartTime).ToList();
         }
 
+        public void deleteCar(int carId)
+        {
+            var car = _context.Cars.FirstOrDefault(c => c.CarId == carId);
+            if (car != null)
+            {
+                car.IsDeleted = true; 
+                _context.SaveChanges(); 
+            }
+        }
     }
 }

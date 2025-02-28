@@ -1,6 +1,7 @@
 ﻿using API.Services;
 using DataAccess.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -66,7 +67,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("charging-history")]
         public ActionResult<List<ChargingHistoryDTO>> GetChargingHistory(
             [FromQuery] int carId,
             [FromQuery] DateTime? start,
@@ -80,6 +81,15 @@ namespace API.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpDelete("Delete/{carId}")]
+        public IActionResult DeleteCar(int carId)
+        {
+            _carService.deleteCar(carId);
+            
+
+            return Ok(new { message = "Car deleted successfully" });
         }
     }
 }

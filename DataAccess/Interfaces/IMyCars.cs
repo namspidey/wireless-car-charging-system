@@ -17,5 +17,7 @@ namespace DataAccess.Interfaces
 
 
         List<ChargingHistoryDTO> GetChargingHistory(int carId, DateTime? start, DateTime? end, int? chargingStationId);
+
+        void deleteCar(int carId);
     }
 }

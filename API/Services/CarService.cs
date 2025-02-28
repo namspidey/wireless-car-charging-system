@@ -31,5 +31,10 @@ namespace API.Services
         {
             return _myCars.GetChargingHistory(carId, start, end, chargingStationId);
         }
+
+        public void deleteCar(int carId)
+        {
+             _myCars.deleteCar(carId);
+        }
     }
 }

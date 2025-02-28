@@ -31,6 +31,7 @@ namespace DataAccess.DTO
     {
         public int SessionId { get; set; }
         public int? CarId { get; set; }
+        public string? CarName { get; set; }
         public string? LicensePlate { get; set; }
 
         public int? ChargingPointId { get; set; }
