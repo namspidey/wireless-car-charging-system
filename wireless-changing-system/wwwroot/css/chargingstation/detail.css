@@ -1,0 +1,86 @@
+﻿body {
+    padding: 20px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+    .status-dot.available {
+        background-color: #00ff00;
+    }
+
+    .status-dot.in-use {
+        background-color: red;
+    }
+
+    .status-dot.maintenance {
+        background-color: yellow;
+    }
+
+.point-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.station-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .station-header img {
+        width: 500px;
+        height: 300px;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+.station-info {
+    flex-grow: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 767.98px) {
+    .station-header {
+        flex-direction: column; /* Chuyển sang layout dọc */
+        align-items: center; /* Căn giữa các phần tử */
+    }
+
+        .station-header img {
+            width: 100%; /* Ảnh chiếm toàn bộ chiều rộng */
+            height: auto; /* Chiều cao tự động điều chỉnh */
+            margin-right: 0; /* Bỏ khoảng cách bên phải */
+            margin-bottom: 15px; /* Thêm khoảng cách dưới ảnh */
+        }
+
+    .station-info {
+        text-align: center; /* Căn giữa văn bản */
+    }
+
+    .charging-points .row {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các point xuống dòng */
+    }
+
+    .charging-points .col-md-4 {
+        width: 100%; /* 1 point một hàng */
+    }
+}
+
+@media (min-width: 768px) {
+    .charging-points .row {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các point xuống dòng */
+    }
+
+    .charging-points .col-md-4 {
+        width: 33.33%; /* Hai point một hàng */
+    }
+}
