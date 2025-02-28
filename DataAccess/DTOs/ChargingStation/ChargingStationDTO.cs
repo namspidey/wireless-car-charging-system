@@ -1,4 +1,6 @@
-﻿namespace DataAccess.DTOs.ChargingStation
+﻿using DataAccess.Repositories;
+
+namespace DataAccess.DTOs.ChargingStation
 {
     public class ChargingStationDto
     {
@@ -15,6 +17,12 @@
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
         public double? MaxConsumPower { get; set; }
+    }
+
+    public class StationDetailDto
+    {
+        public ChargingStationDto Station { get; set; }
+        public PagedResult<ChargingPointDto>? Points { get; set; }
     }
 
     public class NewChargingStationDto

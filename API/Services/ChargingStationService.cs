@@ -20,7 +20,7 @@ namespace API.Services
             return _stationRepository.GetAllStation(keyword, userLat, userLng, page, pageSize);
         }
 
-        public StationDetailDto? GetStationDetails(int stationId)
+        public StationDetailDto? GetStationDetails(int stationId, int page, int pageSize)
         {
             // Lấy thông tin trạm sạc
             var station = _stationRepository.GetStationById(stationId);
@@ -29,7 +29,7 @@ namespace API.Services
             if (station == null) return null;
 
             // Lấy danh sách điểm sạc của trạm đó
-            var points = _pointRepository.GetAllPointsByStation(stationId);
+            var points = _pointRepository.GetAllPointsByStation(stationId, page, pageSize);
 
             // Gộp dữ liệu vào DTO mới
             return new StationDetailDto

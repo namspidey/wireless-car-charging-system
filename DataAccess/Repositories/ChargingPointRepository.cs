@@ -2,6 +2,7 @@
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DataAccess.Repositories
 {
@@ -14,7 +15,7 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public List<ChargingPointDto> GetAllPointsByStation(int stationId)
+        public PagedResult<ChargingPointDto>? GetAllPointsByStation(int stationId, int page, int pageSize)
         {
             var points = _context.ChargingPoints
                 .Include(cp => cp.ChargingSessions)
@@ -34,7 +35,16 @@ namespace DataAccess.Repositories
                 })
                 .ToList();
 
-            return points;
+            int totalRecords = points.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Phân trang (chỉ lấy dữ liệu của trang hiện tại)
+            var data = points
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new PagedResult<ChargingPointDto> { Data = data, TotalPages = totalPages }; ;
         }
 
         public ChargingPointDto GetPointById(int pointId)

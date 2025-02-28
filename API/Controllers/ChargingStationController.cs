@@ -24,9 +24,9 @@ namespace API.Controllers
 
 
         [HttpGet("Detail/{stationId}")]
-        public ActionResult GetStationDetails(int stationId)
+        public ActionResult GetStationDetails(int stationId, int page, int pageSize)
         {
-            var stationDetails = _stationService.GetStationDetails(stationId);
+            var stationDetails = _stationService.GetStationDetails(stationId, page, pageSize);
 
             if (stationDetails == null)
             {
