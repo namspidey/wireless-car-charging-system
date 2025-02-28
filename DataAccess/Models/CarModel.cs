@@ -23,6 +23,8 @@ public partial class CarModel
 
     public string? ChargingStandard { get; set; }
 
+    public string? Img { get; set; }
+
     public DateTime? CreateAt { get; set; }
 
     public DateTime? UpdateAt { get; set; }
