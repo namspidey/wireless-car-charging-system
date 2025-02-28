@@ -1,5 +1,5 @@
 ﻿using API.Services;
-using DataAccess.DTO.Auth;
+using DataAccess.DTOs.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

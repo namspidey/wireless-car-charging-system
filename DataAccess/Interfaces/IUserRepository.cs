@@ -1,4 +1,4 @@
-﻿using DataAccess.DTO.Auth;
+﻿using DataAccess.DTOs.Auth;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;

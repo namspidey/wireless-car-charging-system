@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.DTO.Auth
+namespace DataAccess.DTOs.Auth
 {
     public class RegisterRequest
     {

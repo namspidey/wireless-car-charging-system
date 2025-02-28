@@ -1,5 +1,5 @@
 ﻿using BCrypt.Net;
-using DataAccess.DTO.Auth;
+using DataAccess.DTOs.Auth;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.IdentityModel.Tokens;

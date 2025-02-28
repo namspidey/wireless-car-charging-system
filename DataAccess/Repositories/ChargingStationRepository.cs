@@ -124,22 +124,21 @@ namespace DataAccess.Repositories
             return station;
         }
 
-        public void SaveStation(NewChargingStationDto s)
-        {
-            var newStation = new ChargingStation
-            {
-                OwnerId = s.OwnerId,
-                StationLocationId = s.StationLocationId,
-                StationName = s.StationName,
-                Status = s.Status,
-                CreateAt = DateTime.UtcNow,
-                MaxConsumPower = s.MaxConsumPower
-            };
+        //public void SaveStation(NewChargingStationDto s)
+        //{
+        //    var newStation = new ChargingStation
+        //    {
+        //        OwnerId = s.OwnerId,
+        //        StationLocationId = s.StationLocationId,
+        //        StationName = s.StationName,
+        //        Status = s.Status,
+        //        CreateAt = DateTime.UtcNow,
+        //        MaxConsumPower = s.MaxConsumPower
+        //    };
 
-            _context.ChargingStations.Add(newStation);
-            _context.SaveChanges();
-        }
-
+        //    _context.ChargingStations.Add(newStation);
+        //    _context.SaveChanges();
+        //}
 
         public void UpdateStation(UpdateChargingStationDto s)
         {

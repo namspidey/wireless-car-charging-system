@@ -70,23 +70,23 @@ namespace DataAccess.Repositories
             return point;
         }
 
-        public void SaveChargingPoint(NewChargingPointDto cp)
-        {
-            var newPoint = new ChargingPoint
-            {
-                StationId = cp.StationId,
-                ChargingPointName = cp.ChargingPointName,
-                Description = cp.Description,
-                Status = cp.Status,
-                MaxPower = cp.MaxPower,
-                CreateAt = cp.CreateAt,
-                MaxConsumPower = cp.MaxConsumPower
-            };
+        //public void SaveChargingPoint(NewChargingPointDto cp)
+        //{
+        //    var newPoint = new ChargingPoint
+        //    {
+        //        StationId = cp.StationId,
+        //        ChargingPointName = cp.ChargingPointName,
+        //        Description = cp.Description,
+        //        Status = cp.Status,
+        //        MaxPower = cp.MaxPower,
+        //        CreateAt = cp.CreateAt,
+        //        MaxConsumPower = cp.MaxConsumPower
+        //    };
 
-            _context.ChargingPoints.Add(newPoint);
-            _context.SaveChanges();
+        //    _context.ChargingPoints.Add(newPoint);
+        //    _context.SaveChanges();
 
-        }
+        //}
 
         public void UpdateChargingPoint(UpdateChargingPointDto cp)
         {

@@ -1,5 +1,5 @@
 ﻿using Azure.Core;
-using DataAccess.DTO.Auth;
+using DataAccess.DTOs.Auth;
 using DataAccess.Interfaces;
 
 namespace API.Services

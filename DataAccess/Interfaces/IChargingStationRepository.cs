@@ -7,7 +7,7 @@ namespace DataAccess.Interfaces
     {
         PagedResult<ChargingStationDto>? GetAllStation(string? keyword, decimal? userLat, decimal? userLng, int page, int pageSize);
         ChargingStationDto GetStationById(int stationId);
-        void SaveStation(NewChargingStationDto s);
+        //void SaveStation(NewChargingStationDto s);
         void UpdateStation(UpdateChargingStationDto s);
         void DeleteStation(int stationId);
     }

@@ -42,7 +42,7 @@ namespace API.Services
 
         public void SaveChargingStation(NewChargingStationDto chargingStation)
         {
-            _stationRepository.SaveStation(chargingStation);
+            //_stationRepository.SaveStation(chargingStation);
         }
 
         public void UpdateChargingStation(UpdateChargingStationDto chargingStation)
