@@ -1,0 +1,53 @@
+﻿@page
+@model wireless_changing_system.Pages.Wireless_charging.Auth.IndexModel
+@{
+}
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row g-5 w-100 ">
+        <!-- Left Side - Logo & Slogan -->
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-center d-none d-md-block">
+            <img src="/img/logo.png" alt="Logo" class="mb-4 LoginLogo" style="max-width: 250px;">
+            <h1 class="display-5 fw-bold text-primary ">Wireless Charging System</h1>
+            <p class="lead text-muted ">Smart Charging Solutions for the Future</p>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="col-md-6">
+            <div class="login-card shadow p-4 bg-white rounded-3">
+                <h2 class="mb-4 text-center">Welcome Back</h2>
+
+                <form>
+                    <div class="mb-3">
+                        <input type="text"
+                               class="form-control form-control-lg"
+                               placeholder="Email or Phone number">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password"
+                               class="form-control form-control-lg"
+                               placeholder="Password">
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg w-100 mb-3 fw-bold">
+                        Login
+                    </button>
+
+                    <div class="text-center mb-3">
+                        <a href="#" class="text-decoration-none text-secondary">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <div class="border-top my-4"></div>
+
+                    <button type="button"
+                            class="btn btn-outline-success btn-lg w-100">
+                        Create New Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
