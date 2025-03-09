@@ -7,11 +7,11 @@ public partial class ChargingSession
 {
     public int SessionId { get; set; }
 
-    public int? CarId { get; set; }
+    public int CarId { get; set; }
 
-    public int? ChargingPointId { get; set; }
+    public int ChargingPointId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public DateTime? StartTime { get; set; }
 
@@ -23,11 +23,11 @@ public partial class ChargingSession
 
     public string? Status { get; set; }
 
-    public virtual Car? Car { get; set; }
+    public virtual Car Car { get; set; } = null!;
 
-    public virtual ChargingPoint? ChargingPoint { get; set; }
+    public virtual ChargingPoint ChargingPoint { get; set; } = null!;
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; } = null!;
 }

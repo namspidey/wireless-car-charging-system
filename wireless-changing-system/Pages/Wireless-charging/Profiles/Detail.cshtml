@@ -1,0 +1,112 @@
+﻿@page
+@model wireless_changing_system.Pages.Wireless_charging.Profiles.DetailModel
+@{
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row w-100">
+            <!-- Sidebar -->
+            <div class="col-md-4 profile-sidebar">
+                <div class="text-center">
+                    <img alt="User profile picture" class="profile-img" height="100" src="https://placehold.co/100x100" width="100" />
+                    <h2 id="userFullName">FullName</h2>
+                </div>
+                <ul>
+                    <li><i class="fas fa-user-circle"></i> User Profile</li>
+                    <li><i class="fas fa-car"></i> My Cars</li>
+                    <li><i class="fas fa-history"></i> Payment history</li>
+                    <li><i class="fas fa-piggy-bank"></i> Deposit history</li>
+                    <li><a href="/Wireless-charging/Profiles/ChangePassword"><i class="fas fa-key"></i> Change Password</a></li>
+                    <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+                </ul>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-8 profile-content">
+                <div class="form-group">
+                    <img alt="User profile picture" class="profile-img" height="100" src="https://placehold.co/100x100" width="100" />
+                </div>
+                <div class ="form-group">
+                    <label for="fullname">FullName:</label>
+                    <input class="form-control" id="fullname" placeholder="FullName" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email or Phone Number:</label>
+                    <input class="form-control" id="email" placeholder="Email or Phone Number" type="text" />
+                </div >
+                <div class="form-group">
+                    <label for="doB">Date Of Birth:</label>
+                    <div class="form-row">
+                        <input type="date" class="form-control" id="dob" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input checked="" class="form-radio" name="gender" type="radio" />
+                            <span>
+                                Male
+                            </span>
+                        </label>
+                        <label class="form-check-label">
+                            <input class="form-radio" name="gender" type="radio" />
+                            <span>
+                                Female
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userId = getUserIdFromUrl();
+            if (!userId) {
+                console.error("User ID is missing in the URL.");
+                return;
+            }
+            localStorage.setItem('userId', userId);
+            fetchUserDetail(userId);
+        });
+
+        function getUserIdFromUrl() {
+            return new URLSearchParams(window.location.search).get('userId');
+        }
+
+        async function fetchUserDetail(userId) {
+            fetch(`https://localhost:7191/api/user/detail/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('User not found');
+                    }
+                    return response.json();
+                })
+                .then(userData => {
+                    document.getElementById('fullname').value = userData.fullName || '';
+                    document.getElementById('userFullName').innerText = userData.fullName || '';
+                    document.getElementById('email').value = userData.email || userData.phoneNumber || '';
+
+                    if (userData.dob) {
+                        const dob = new Date(userData.dob);
+                        const dobString = dob.toISOString().split('T')[0]; // Lấy phần ngày
+                        document.getElementById('dob').value = dobString;
+                    }
+
+                    if (userData.gender) {
+                        const genderRadios = document.querySelectorAll('input[name="gender"]');
+                        if (userData.gender === 0) {
+                            genderRadios[0].checked = true; // Nam
+                        } else if (userData.gender === 1) {
+                            genderRadios[1].checked = true; // Nữ
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    alert('Could not load user data. Please try again later.');
+                });
+        }  
+    </script>
+}

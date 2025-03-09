@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace wireless_changing_system.Pages.Wireless_charging.Profiles
 {
-    public class ChangePasswordModel : PageModel
+    public class DetailModel : PageModel
     {
         public void OnGet()
         {
