@@ -3,20 +3,38 @@
 #include <SPI.h>
 #include <RF24.h>
 
-#define SENSOR_SLOT1_PIN 2
+#define SENSOR_SLOT_PIN 2
 
-LiquidCrystal_I2C lcd1(0x26, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 RF24 radio(9, 10);
 const byte address[6] = "00001";
+String vehicleLicensePlate = "";
+bool vehicleLicensePlateReceived = false;
+
+bool isCharging = false;
 
 void setup() {
-  lcd1.begin(16, 2);
-  lcd1.backlight();
-  displayMessage(lcd1, "Initializing...", "");
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.backlight();
+  lcd.init();
+
+  lcd.setCursor(0, 0);
+  lcd.print("W e l c o m e !");
+  lcd.setCursor(0, 1);
+  lcd.print("W-eV Station 1st ");
+  delay(4000);
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Initializing...");
   delay(2000);
-  displayMessage(lcd1, "System Check...", "");
-  displayMessage(lcd1, "Charging Point 1", "Status: Ready!");
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("System Check...");
+  delay(2000);
 
   radio.begin();
   radio.openReadingPipe(1, address);
@@ -29,64 +47,28 @@ void setup() {
   Serial.begin(9600);
 }
 
-void displayMessage(LiquidCrystal_I2C &lcd, String line1, String line2) {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(line1);
-  lcd.setCursor(0, 1);
-  lcd.print(line2);
-}
-
 bool detectObstacleDigital(int sensorDigitalPin) {
   int sensorState = digitalRead(sensorDigitalPin);
   return sensorState == LOW;
 }
 
-float readVoltage(int voltage_pin) {
+float readCurrent(int current_pin) {
   float totalVoltage = 0.0;
   int sensorValue;
-
-  for (int i = 0; i < 200; i++) {
-    sensorValue = analogRead(voltage_pin);
-    float voltage = sensorValue * (25.0 / 1023.0) + 0.25;
-    totalVoltage += voltage;
-    delay(5);
-  }
-
-  float averageVoltage = totalVoltage / 200.0;
-  return averageVoltage;
-}
-
-
-float readCurrent(int current_pin) {
-  float totalCurrent = 0.0;
-  int sensorValue;
-  float voltage, current;
+  float voltage;
 
   for (int i = 0; i < 200; i++) {
     sensorValue = analogRead(current_pin);
     voltage = sensorValue * (5.0 / 1023.0);
-    current = (voltage - 2.54) / 0.100;
-    totalCurrent += current;
+    totalVoltage += voltage;
     delay(5);
   }
+  float averageVoltage = totalVoltage / 200.0;
+  float current = (averageVoltage - 2.5) / 0.100;
 
-  float averageCurrent = totalCurrent / 200.0;
-  return averageCurrent;
+  return current;
 }
 
-
-String receiveVehicleLicensePlate() {
-  char receivedText[32] = "";
-  if (radio.available()) {
-    radio.read(&receivedText, sizeof(receivedText));
-    String licensePlate = String(receivedText);
-    return licensePlate;
-  } else {
-    Serial.print("Not found");
-    return "";
-  }
-}
 
 void relayOn() {
   digitalWrite(4, HIGH);
@@ -96,7 +78,92 @@ void relayOff() {
   digitalWrite(4, LOW);
 }
 
+void system_ready() {
+  relayOff();
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("System Status: ");
+  lcd.setCursor(0, 1);
+  lcd.print("Ready !");
+  delay(3800);
+}
+
+String receiveVehicleLicensePlate() {
+  char receivedText[32] = "";
+  if (radio.available()) {
+    radio.read(&receivedText, sizeof(receivedText));
+    String receivedString = String(receivedText);
+    if (receivedString.indexOf("[licensePlate]") != -1) {
+      Serial.println(receivedString);
+      return receivedString;
+    }
+  }
+  return "";
+}
+
+String receiveChargingData() {
+  char receivedText[32] = "";
+  if (radio.available()) {
+    radio.read(&receivedText, sizeof(receivedText));
+    String receivedString = String(receivedText);
+    if (receivedString.indexOf("[charging]") != -1) {
+      return receivedString;
+    }
+  }
+  return "";
+}
+
+
 void loop() {
-  Serial.println(receiveVehicleLicensePlate());
-  delay(1000);
+  bool detectCar = detectObstacleDigital(SENSOR_SLOT_PIN);
+  float point_current = readCurrent(A1);
+
+  if (detectCar) {
+    if (point_current >= 0.25) {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("System Status: ");
+      lcd.setCursor(0, 1);
+      lcd.print("Charging ! ");
+
+      isCharging = true;
+      String dataToSend = receiveChargingData();
+      float powerPoint = point_current * 5;
+
+      String powerPointToSend = String("{[charging] Point: ") + String(powerPoint) + "W" + "}";
+
+      Serial.println(dataToSend);
+      Serial.println(powerPointToSend);
+
+    } else if (isCharging && point_current < 0.25) {
+      system_ready();
+      isCharging = false;
+      delay(1000);
+      Serial.println("[disconnected]");
+    } else {
+      vehicleLicensePlate = receiveVehicleLicensePlate();
+      if (vehicleLicensePlate != "") {
+        Serial.println(vehicleLicensePlate);
+        String receivedData = Serial.readString();
+        int separatorIndex = receivedData.indexOf('-');
+        if (separatorIndex != -1) {
+          String name = receivedData.substring(0, separatorIndex);
+          String balanceStr = receivedData.substring(separatorIndex + 1);
+          int balance = balanceStr.toInt();
+
+          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.print("Welcome " + name + "!");
+          lcd.setCursor(0, 1);
+          lcd.print("Balance: " + String(balance) + "VND");
+          relayOn();
+        }
+      }
+    }
+  } else {
+    system_ready();
+    isCharging = false;
+    Serial.println("[disconnected]");
+    delay(1000);
+  }
 }
