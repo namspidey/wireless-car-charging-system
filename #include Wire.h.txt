@@ -1,0 +1,307 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <Servo.h>
+#include <SPI.h>
+#include <RF24.h>
+
+#define SENSOR_SLOT1_PIN 6
+#define SENSOR_SLOT2_PIN 5
+#define BUZZER_PIN 4
+
+int SENSOR_IN1_ANALOG_PIN = A3;
+int SENSOR_IN2_ANALOG_PIN = A2;
+int SENSOR_OUT1_ANALOG_PIN = A1;
+int SENSOR_OUT2_ANALOG_PIN = A0;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd2(0x26, 16, 2);
+Servo servoIn;
+Servo servoOut;
+
+RF24 radio(9, 10);
+const byte address[6] = "00001";
+String vehicleLicensePlate = "";
+bool vehicleLicensePlateReceived = false;
+bool isWelcomeDisplayed = false;
+
+int noteDurationForError[] = {
+  1500
+};
+int noteDurationForDone[] = {
+  300
+};
+bool isBuzzerPlayedForDoneIn = false;
+bool isBuzzerPlayedForDoneOut = false;
+bool isBuzzerPlayedForError = false;
+
+bool previousSlot1Status = false;
+bool previousSlot2Status = false;
+
+bool initializingServo = false;
+
+bool isBarrierOpened = false;
+bool isExited = false;
+unsigned long timeSensor1Activated = 0;
+
+bool isBarrierOpened1 = false;
+bool isExited1 = false;
+unsigned long timeSensor1Activated1 = 0;
+
+void setup() {
+  pinMode(SENSOR_SLOT1_PIN, INPUT);
+  pinMode(SENSOR_SLOT2_PIN, INPUT);
+
+  servoIn.attach(8);   //In
+  servoOut.attach(7);  //Out
+
+  radio.begin();
+  radio.openReadingPipe(1, address);
+  radio.setPALevel(RF24_PA_HIGH);
+  radio.setChannel(0x4c);
+  radio.startListening();
+
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+
+  lcd2.init();
+  lcd2.backlight();
+}
+
+void exitDisplay() {
+  lcd2.clear();
+  lcd2.setCursor(0, 0);
+  lcd2.print("G o o d  B y e");
+  lcd2.setCursor(0, 1);
+  lcd2.print("See you again !");
+}
+
+void doneSystemSound() {
+  pinMode(BUZZER_PIN, OUTPUT);
+  for (int i = 0; i < 1; i++) {
+    digitalWrite(BUZZER_PIN, LOW);
+    delay(noteDurationForDone[i] / 2);
+    digitalWrite(BUZZER_PIN, HIGH);
+    delay(noteDurationForDone[i] / 2);
+  }
+}
+
+void errorSystemSound() {
+  pinMode(BUZZER_PIN, OUTPUT);
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(BUZZER_PIN, LOW);
+    delay(noteDurationForError[i] / 2);
+    digitalWrite(BUZZER_PIN, HIGH);
+    delay(noteDurationForError[i] / 2);
+  }
+}
+
+bool detectObstacleAnalog(int sensorAnalogPin) {
+  int sensorValue = analogRead(sensorAnalogPin);
+  return sensorValue < 200;
+}
+
+bool detectObstacleDigital(int sensorDigitalPin) {
+  int sensorState = digitalRead(sensorDigitalPin);
+  return sensorState == LOW;
+}
+
+void openBarrierIn() {
+  if (!isBuzzerPlayedForDoneIn) {
+    doneSystemSound();
+    isBuzzerPlayedForDoneIn = true;
+  }
+  for (int pos = 0; pos <= 90; pos += 1) {
+    servoIn.write(pos);
+    delay(15);
+  }
+}
+
+void closeBarrierIn() {
+  for (int pos = 90; pos >= 0; pos -= 1) {
+    servoIn.write(pos);
+    delay(15);
+  }
+}
+
+void openBarrierOut() {
+  if (!isBuzzerPlayedForDoneOut) {
+    doneSystemSound();
+    isBuzzerPlayedForDoneOut = true;
+  }
+  for (int pos = 0; pos <= 90; pos += 1) {
+    servoOut.write(pos);
+    delay(15);
+  }
+}
+
+void closeBarrierOut() {
+  for (int pos = 90; pos >= 0; pos -= 1) {
+    servoOut.write(pos);
+    delay(15);
+  }
+}
+
+void checkSlots() {
+  if (detectObstacleDigital(SENSOR_SLOT1_PIN)) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Slot1: Not Avail");
+  } else {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Slot1: Avail");
+  }
+
+  if (detectObstacleDigital(SENSOR_SLOT2_PIN)) {
+    lcd.setCursor(0, 1);
+    lcd.print("Slot2: Not Avail");
+  } else {
+    lcd.setCursor(0, 1);
+    lcd.print("Slot2: Avail");
+  }
+
+  if (detectObstacleDigital(SENSOR_SLOT1_PIN) != previousSlot1Status) {
+    if (detectObstacleDigital(SENSOR_SLOT1_PIN)) {
+      Serial.println("UPDATE charging_point SET status = 0 WHERE charging_point_id = 1");
+    } else {
+      Serial.println("UPDATE charging_point SET status = 1 WHERE charging_point_id = 1");
+    }
+    previousSlot1Status = detectObstacleDigital(SENSOR_SLOT1_PIN);
+  }
+
+  if (detectObstacleDigital(SENSOR_SLOT2_PIN) != previousSlot2Status) {
+    if (detectObstacleDigital(SENSOR_SLOT2_PIN)) {
+      Serial.println("UPDATE charging_point SET status = 0 WHERE charging_point_id = 2");
+    } else {
+      Serial.println("UPDATE charging_point SET status = 1 WHERE charging_point_id = 2");
+    }
+    previousSlot2Status = detectObstacleDigital(SENSOR_SLOT2_PIN);
+  }
+}
+
+String receiveVehicleLicensePlate() {
+  char receivedText[32] = "";
+  if (radio.available()) {
+    radio.read(&receivedText, sizeof(receivedText));
+    String licensePlate = String(receivedText);
+    return licensePlate;
+  } else {
+    return "";
+  }
+}
+
+void loop() {
+  bool isObstacleIn1 = detectObstacleAnalog(SENSOR_IN1_ANALOG_PIN);
+  bool isObstacleIn2 = detectObstacleAnalog(SENSOR_IN2_ANALOG_PIN);
+  bool isObstacleOut1 = detectObstacleAnalog(SENSOR_OUT1_ANALOG_PIN);
+  bool isObstacleOut2 = detectObstacleAnalog(SENSOR_OUT2_ANALOG_PIN);
+
+  bool isSlot1Occupied = detectObstacleDigital(SENSOR_SLOT1_PIN);
+  bool isSlot2Occupied = detectObstacleDigital(SENSOR_SLOT2_PIN);
+
+  exitDisplay();
+
+  if (!initializingServo) {
+    closeBarrierOut();
+    closeBarrierIn();
+    initializingServo = true;
+  }
+
+  if (isObstacleOut1 && !isBarrierOpened) {
+    openBarrierOut();
+    isBarrierOpened = true;
+    timeSensor1Activated = millis();
+  }
+
+  if (isObstacleOut2 && !isExited) {
+    isExited = true;
+  }
+
+  if (isBarrierOpened && millis() - timeSensor1Activated >= 10000) {
+    if (!isObstacleOut1 && !isObstacleOut2) {
+      closeBarrierOut();
+      isBarrierOpened = false;
+      isExited = false;
+      isBuzzerPlayedForDoneOut = false;
+    }
+  }
+
+  if (!isObstacleOut1 && isExited && !isObstacleOut2 && isBarrierOpened) {
+    closeBarrierOut();
+    isBarrierOpened = false;
+    isExited = false;
+    isBuzzerPlayedForDoneOut = false;
+  }
+
+  if (!isObstacleIn1 && !vehicleLicensePlateReceived) {
+    checkSlots();
+  }
+
+  if (isSlot1Occupied && isSlot2Occupied) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Both slots full!");
+    lcd.setCursor(0, 1);
+    lcd.print("Please wait.");
+    delay(2000);
+  } else {
+    if (isObstacleIn1 && !vehicleLicensePlateReceived) {
+      vehicleLicensePlate = receiveVehicleLicensePlate();
+      if (vehicleLicensePlate != "") {
+        vehicleLicensePlateReceived = true;
+        Serial.println(vehicleLicensePlate);
+        String message = Serial.readString();
+
+        if (message == "OPEN") {
+          if (isObstacleIn1 && !isBarrierOpened1) {
+            openBarrierIn();
+            isBarrierOpened1 = true;
+            timeSensor1Activated1 = millis();
+          }
+
+          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.print("WelcomeToStation");
+          lcd.setCursor(0, 1);
+          lcd.print(vehicleLicensePlate);
+        } else if (message == "CLOSE") {
+          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.print("Your Vehicle is");
+          lcd.setCursor(0, 1);
+          lcd.print("not registered !");
+        }
+      } else {
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("No entry without");
+        lcd.setCursor(0, 1);
+        lcd.print("permission !");
+      }
+    }
+    if (!isObstacleIn1 && vehicleLicensePlateReceived) {
+      vehicleLicensePlateReceived = false;
+      lcd.clear();
+      checkSlots();
+    }
+    if (isObstacleOut2 && !isExited1) {
+      isExited1 = true;
+    }
+    if (isBarrierOpened1 && millis() - timeSensor1Activated1 >= 10000) {
+      if (!isObstacleIn11 && !isObstacleIn2) {
+        closeBarrierIn();
+        isBarrierOpened1 = false;
+        isExited1 = false;
+        isBuzzerPlayedForDoneOut = false;
+      }
+    }
+    if (!isObstacleIn1 && isExited1 && !isObstacleIn2 && isBarrierOpened1) {
+      closeBarrierIn();
+      isBarrierOpened1 = false;
+      isExited1 = false;
+      isBuzzerPlayedForDoneOut = false;
+    }
+    delay(1000);
+  }
+}
