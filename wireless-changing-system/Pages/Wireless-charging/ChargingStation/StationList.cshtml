@@ -87,7 +87,7 @@
         // Lấy dữ liệu trạm sạc
         async function loadStations(userLat, userLng, keyword, currentPage, pageSize, currentRole) {
             try {
-                let url = `https://localhost:7191/api/ChargingStation?keyword=${encodeURIComponent(keyword)}&currentRole=${currentRole}&page=${currentPage}&pageSize=${pageSize}`;
+                let url = `https://API20250506035221.azurewebsites.net/api/ChargingStation?keyword=${encodeURIComponent(keyword)}&currentRole=${currentRole}&page=${currentPage}&pageSize=${pageSize}`;
 
                 if (userLat !== null && userLat !== undefined && userLng !== null && userLng !== undefined) {
                     url += `&userLat=${userLat}&userLng=${userLng}`;
@@ -262,7 +262,7 @@
         // Xóa trạm sạc
         async function deleteStation(stationIdToDelete) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/${stationIdToDelete}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/${stationIdToDelete}`;
                 const options = {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }

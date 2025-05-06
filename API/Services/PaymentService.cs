@@ -30,8 +30,8 @@ namespace API.Services
                 request.TotalPrice,
                 request.Description,
                 items,
-                "https://localhost:7191/api/Payment/callback",
-                "https://localhost:5216/wireless-charging/payment/success"
+                "https://API20250506035221.azurewebsites.net/Payment/callback",
+                "https://wireless-charging-system.azurewebsites.net//wireless-charging/payment/success"
             );
 
             var paymentResult = await _payOS.createPaymentLink(paymentData);

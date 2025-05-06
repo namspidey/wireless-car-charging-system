@@ -48,7 +48,7 @@
             actionsDiv.style.display = 'none';
 
             try {
-              const res = await fetch('https://localhost:7191/api/otp/activate', {
+              const res = await fetch('https://API20250506035221.azurewebsites.net/api/otp/activate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ Email: email, OtpCode: token })
@@ -110,7 +110,7 @@
               </div>`;
 
             try {
-              const res = await fetch('https://localhost:7191/api/otp/activation-token', {
+              const res = await fetch('https://API20250506035221.azurewebsites.net/api/otp/activation-token', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ Email: email })

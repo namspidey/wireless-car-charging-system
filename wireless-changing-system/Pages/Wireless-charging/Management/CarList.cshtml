@@ -207,7 +207,7 @@
         async function loadCars({ search, type, branch, status, page, pageSize }) {
             try {
                 const params = new URLSearchParams({ search, type, branch, status, page, pageSize });
-                const url = `https://localhost:7191/api/Car/all-cars?${params.toString()}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/Car/all-cars?${params.toString()}`;
 
                 const options = {
                     method: 'GET',
@@ -232,7 +232,7 @@
 
         async function loadFilterOptions() {
             try {
-                const url = "https://localhost:7191/api/Car/filter-options";
+                const url = "https://API20250506035221.azurewebsites.net/api/Car/filter-options";
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }

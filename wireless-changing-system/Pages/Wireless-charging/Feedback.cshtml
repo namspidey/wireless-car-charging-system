@@ -76,7 +76,7 @@
 
     async function loadCarSelect(targetDiv) {
             try {
-                const url = "https://localhost:7191/api/Car/owner";
+                const url = "https://API20250506035221.azurewebsites.net/api/Car/owner";
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -107,7 +107,7 @@
             let page = 1;
 
             async function loadStations() {
-                const url = `https://localhost:7191/api/ChargingStation?page=${page}&pageSize=${pageSize}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation?page=${page}&pageSize=${pageSize}`;
                 const response = await fetchWithAuth(url, { method: 'GET' });
                 if (response.ok) {
                     const stations = await response.json();
@@ -144,7 +144,7 @@
                 let pointPage = 1;
 
                 async function loadPoints() {
-                    const url = `https://localhost:7191/api/ChargingStation/Detail/${stationId}?page=${pointPage}&pageSize=${pageSize}`;
+                    const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/Detail/${stationId}?page=${pointPage}&pageSize=${pageSize}`;
                     const response = await fetchWithAuth(url, { method: 'GET' });
                     if (response.ok) {
                         const data = await response.json();
@@ -193,7 +193,7 @@
                 pointId: pointId || null
             };
 
-            const response = await fetchWithAuth("https://localhost:7191/api/Feedback", {
+            const response = await fetchWithAuth("https://API20250506035221.azurewebsites.net/api/Feedback", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)

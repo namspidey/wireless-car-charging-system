@@ -245,7 +245,7 @@
                 toUpdateDate: document.getElementById('filterToUpdateDate').value
             });
 
-            const response = await fetchWithAuth(`https://localhost:7191/api/user/licenses?${params}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/user/licenses?${params}`);
             if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.detail || "Lỗi không xác định");
@@ -397,7 +397,7 @@
         }
 
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/update-operator`, {
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/update-operator`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -490,7 +490,7 @@
         }
     async function viewDetail(licenseCode) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`);
 
             if (!response.ok) {
                 const error = await response.json();
@@ -509,7 +509,7 @@
         showConfirm(`Xác nhận vô hiệu hóa bằng lái ${licenseCode}?`, async () => {
             try {
                 const response = await fetchWithAuth(
-                    `https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`,
+                    `https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`,
                     { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
                 );
                 if (!response.ok) throw new Error((await response.json()).detail || `HTTP error! status: ${response.status}`);
@@ -526,7 +526,7 @@
         showConfirm(`Xác nhận kích hoạt bằng lái ${licenseCode}?`, async () => {
             try {
                 const response = await fetchWithAuth(
-                    `https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/activate`,
+                    `https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/activate`,
                     { method: 'PUT', headers: { 'Content-Type': 'application/json' } }
                 );
                 if (!response.ok) throw new Error((await response.json()).detail || `Lỗi khi kích hoạt`);
@@ -543,7 +543,7 @@
         showConfirm(`Xác nhận khoá bằng lái ${licenseCode}?`, async () => {
             try {
                 const response = await fetchWithAuth(
-                    `https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/block`,
+                    `https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}/block`,
                     { method: 'PUT', headers: { 'Content-Type': 'application/json' } }
                 );
                 if (!response.ok) throw new Error((await response.json()).detail || `Lỗi khi khoá`);

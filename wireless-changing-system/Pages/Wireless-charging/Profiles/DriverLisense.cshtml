@@ -433,7 +433,7 @@
 
     async function loadDriverLicenses() {
         try {
-            const response = await fetchWithAuth('https://localhost:7191/api/user/driver-licenses/users');
+            const response = await fetchWithAuth('https://API20250506035221.azurewebsites.net/api/user/driver-licenses/users');
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail);
@@ -558,7 +558,7 @@
         showConfirm(`Xác nhận xóa bằng lái ${licenseCode}?`, async () => {
             try {
                 const response = await fetchWithAuth(
-                    `https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`,
+                    `https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`,
                     { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
                 );
                 if (!response.ok) throw new Error((await response.json()).detail || `HTTP error! status: ${response.status}`);
@@ -578,7 +578,7 @@
             isBackQRValid = false;
             try {
                 const response = await fetchWithAuth(
-                    `https://localhost:7191/api/user/driver-licenses/${licenseCode}`,
+                    `https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${licenseCode}`,
                     {
                         method: 'GET',
                         headers: {
@@ -646,7 +646,7 @@
                     formData.append('LicenseFrontImage', fontImg);
 
                     // Gửi yêu cầu cập nhật
-                    const response = await fetchWithAuth(`https://localhost:7191/api/user/driver-licenses/${licenseCode}`, {
+                    const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/user/driver-licenses/${licenseCode}`, {
                         method: 'PUT',
                         body: formData
                     });
@@ -720,7 +720,7 @@
             formData.append('LicenseBackImage', backImg);
             formData.append('LicenseFrontImage', fontImg);
             try {
-                const response = await fetchWithAuth('https://localhost:7191/api/user/driver-licenses', {
+                const response = await fetchWithAuth('https://API20250506035221.azurewebsites.net/api/user/driver-licenses', {
                     method: 'POST',
                     body: formData
                 });
@@ -822,7 +822,7 @@
         formData.append('file', file);
 
         try {
-            const response = await fetchWithAuth('https://localhost:7191/api/Images/read-qr', {
+            const response = await fetchWithAuth('https://API20250506035221.azurewebsites.net/api/Images/read-qr', {
                 method: 'POST',
                 body: formData
             });

@@ -202,7 +202,7 @@
 
         async function addChargingStation(stationDto) {
             try {
-                const url = "https://localhost:7191/api/ChargingStation/Add";
+                const url = "https://API20250506035221.azurewebsites.net/api/ChargingStation/Add";
                 const options = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -228,7 +228,7 @@
 
         async function loadOwners() {
             try {
-                const url = "https://localhost:7191/api/User?roleId=2&pageNumber=1&pageSize=10";
+                const url = "https://API20250506035221.azurewebsites.net/api/User?roleId=2&pageNumber=1&pageSize=10";
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }

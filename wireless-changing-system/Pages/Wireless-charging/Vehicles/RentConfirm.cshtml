@@ -50,7 +50,7 @@
     });
 
         async function updateExpiredRentals() {
-        const apiUrl = `https://localhost:7191/api/Car/update-expired-rentals`;
+        const apiUrl = `https://API20250506035221.azurewebsites.net/api/Car/update-expired-rentals`;
 
         try {
             const response = await fetchWithAuth(apiUrl, {
@@ -67,7 +67,7 @@
         }
     }
         async function loadRentRequests() {
-        const apiUrl = `https://localhost:7191/api/Car/rent-requests`;
+        const apiUrl = `https://API20250506035221.azurewebsites.net/api/Car/rent-requests`;
         const container = document.getElementById("rentConfirmContainer");
 
         try {
@@ -96,7 +96,7 @@
 
         const allowedContent = `
             <span class="badge bg-success fs-6">ĐANG THUÊ</span><br>
-            <a class="btn btn-outline-primary btn-sm mt-2" href="https://localhost:5216/wireless-charging/vehicles/charginganalysisforrenter?carId=${item.carId}">
+            <a class="btn btn-outline-primary btn-sm mt-2" href="https://wireless-charging-system.azurewebsites.net/wireless-charging/vehicles/charginganalysisforrenter?carId=${item.carId}">
                 Xem phân tích
             </a></span>
         `;
@@ -157,7 +157,7 @@
     document.getElementById("confirmRentButton").addEventListener("click", async function () {
         if (!selectedCar) return;
 
-        const apiUrl = "https://localhost:7191/api/Car/confirm-rental";
+        const apiUrl = "https://API20250506035221.azurewebsites.net/api/Car/confirm-rental";
         const requestBody = {
             userId: selectedCar.driverId,
             carId: selectedCar.carId,

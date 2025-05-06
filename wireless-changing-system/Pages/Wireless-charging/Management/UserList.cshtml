@@ -179,7 +179,7 @@
                             submitBtn.disabled = false; submitBtn.innerHTML = 'Tạo tài khoản';
                             return;
                         }
-                        const response = await fetch('https://localhost:7191/api/Test/create-test-user', {
+                        const response = await fetch('https://API20250506035221.azurewebsites.net/api/Test/create-test-user', {
                             method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(formData)
                         });
                         const data = await response.json();
@@ -207,7 +207,7 @@
 
             // Gọi API để lấy danh sách user
             function fetchUsers(page = 1) {
-                let url = `https://localhost:7191/api/User?searchQuery=${searchQuery}&roleId=${currentRoleId}&status=${currentStatus}&pageNumber=${page}&pageSize=${pageSize}`;
+                let url = `https://API20250506035221.azurewebsites.net/api/User?searchQuery=${searchQuery}&roleId=${currentRoleId}&status=${currentStatus}&pageNumber=${page}&pageSize=${pageSize}`;
 
                 fetch(url)
                     .then(response => response.json())
@@ -304,7 +304,7 @@
                     let userId = e.target.getAttribute("data-id");
                     let newStatus = e.target.getAttribute("data-status") === "Active" ? "Blocked" : "Active";
 
-                    fetch(`https://localhost:7191/api/User/change-status/${userId}`, {
+                    fetch(`https://API20250506035221.azurewebsites.net/api/User/change-status/${userId}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(newStatus)
@@ -322,7 +322,7 @@
                     let userId = $(this).data("id");
 
                     $.ajax({
-                        url: `https://localhost:7191/api/User/Feedback/${userId}`,
+                        url: `https://API20250506035221.azurewebsites.net/api/User/Feedback/${userId}`,
                         method: "GET",
                         success: function (data) {
                             $("#feedbackUser").text(userId);

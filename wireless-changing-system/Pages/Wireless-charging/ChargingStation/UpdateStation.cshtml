@@ -61,7 +61,7 @@
 
         async function loadStationDetail(stationId) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/Detail/${stationId}?page=1&pageSize=1`;
+            const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/Detail/${stationId}?page=1&pageSize=1`;
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -87,7 +87,7 @@
 
         async function updateStation(stationId, updateChargingStationDto) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/${stationId}`;
+            const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/${stationId}`;
                 const options = {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },

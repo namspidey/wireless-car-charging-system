@@ -66,7 +66,7 @@
             return;
         }
 
-        let apiUrl = `https://localhost:7191/api/User/get-users-by-email-phone?search=${encodeURIComponent(searchValue)}`;
+        let apiUrl = `https://API20250506035221.azurewebsites.net/api/User/get-users-by-email-phone?search=${encodeURIComponent(searchValue)}`;
 
         try {
             let response = await fetchWithAuth(apiUrl);
@@ -121,7 +121,7 @@
         }
 
         let carId = new URLSearchParams(window.location.search).get('carId');
-        let response = await fetchWithAuth(`https://localhost:7191/api/Car/detail/${carId}`);
+        let response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/detail/${carId}`);
         let car = await response.json();
 
         let selectedUserId = document.getElementById(`user-id-${userId}`).value;
@@ -159,7 +159,7 @@
         let startDate = document.getElementById("startDate").value;
         let endDate = document.getElementById("endDate").value;
 
-        let response = await fetchWithAuth("https://localhost:7191/api/Car/send-rent-request", {
+        let response = await fetchWithAuth("https://API20250506035221.azurewebsites.net/api/Car/send-rent-request", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userId, carId, startDate, endDate })

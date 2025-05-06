@@ -23,7 +23,7 @@
         const status = urlParams.get("status");
 
         if (orderCode && status) {
-            fetchWithAuth(`https://localhost:7191/api/Payment/callback?orderCode=${orderCode}&status=${status}`, {
+            fetchWithAuth(https://API20250506035221.azurewebsites.net/api/Payment/callback?orderCode=${orderCode}&status=${status}`, {
                 method: "GET"
             })
             .then(response => response.json())

@@ -67,7 +67,7 @@
 
     async function loadBalance() {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Payment/balance`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Payment/balance`);
             if (!response.ok) throw new Error("Không thể lấy số dư!");
             const balanceData = await response.json();
             document.getElementById("balanceAmount").innerText = balanceData.balance1.toLocaleString();
@@ -95,7 +95,7 @@
         };
 
         try {
-            const response = await fetchWithAuth("https://localhost:7191/api/Payment/create", {
+            const response = await fetchWithAuth("https://API20250506035221.azurewebsites.net/api/Payment/create", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -115,7 +115,7 @@
 
     async function checkPaymentStatus(orderId, retryCount = 0) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Payment/status/${orderId}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Payment/status/${orderId}`);
             const data = await response.json();
             const statusElement = document.getElementById("paymentStatus");
             statusElement.style.display = "block";
@@ -161,7 +161,7 @@
         async function fetchTransactionHistory() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
-        let url = `https://localhost:7191/api/Payment/transactions?`;
+        let url = `https://API20250506035221.azurewebsites.net/api/Payment/transactions?`;
         if (startDate) url += `&start=${startDate}`;
         if (endDate) url += `&end=${endDate}`;
 

@@ -85,7 +85,7 @@
         document.getElementById("stationSelect").addEventListener("change", () => filterChargingHistory(carId));
 
         // Load stations
-        const response = await fetch('https://localhost:7191/api/ChargingStation');
+        const response = await fetch('https://API20250506035221.azurewebsites.net/api/ChargingStation');
         const data = await response.json();
         const selectElement = document.getElementById('stationSelect');
         data.data.forEach(station => {
@@ -103,7 +103,7 @@
 
             async function fetchChargingHistory(carId) {
         try {
-            const res = await fetchWithAuth(`https://localhost:7191/api/Car/charging-history?carId=${carId}`);
+            const res = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/charging-history?carId=${carId}`);
             const data = await res.json();
 
             if (data.detail) {
@@ -203,7 +203,7 @@
         const endDate = document.getElementById("endDate").value;
         const stationId = document.getElementById("stationSelect").value;
 
-        let url = `https://localhost:7191/api/Car/charging-history?carId=${carId}`;
+        let url = `https://API20250506035221.azurewebsites.net/api/Car/charging-history?carId=${carId}`;
         if (startDate) url += `&start=${startDate}`;
         if (endDate) url += `&end=${endDate}`;
         if (stationId && stationId !== "Chọn một trạm") url += `&chargingStationId=${stationId}`;
@@ -218,7 +218,7 @@
     }
 
     async function fetchMonthlyStats(carId, year) {
-        const res = await fetchWithAuth(`https://localhost:7191/api/Car/${carId}/stats?year=${year}`);
+        const res = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/${carId}/stats?year=${year}`);
         return await res.json();
     }
 

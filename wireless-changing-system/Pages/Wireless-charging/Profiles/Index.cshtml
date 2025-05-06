@@ -131,7 +131,7 @@
         });
 
         // Lấy thông tin người dùng
-        fetchWithAuth(`https://localhost:7191/api/User/profile`)
+        fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/User/profile`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById("fullname").value = data.fullname;
@@ -168,7 +168,7 @@
                 address: document.getElementById("address").value
             };
 
-            fetchWithAuth(`https://localhost:7191/api/User/profile`, {
+            fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/User/profile`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedData)

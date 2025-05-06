@@ -118,7 +118,7 @@
 
     // SignalR Connection
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7191/realtimeHub")
+        .withUrl("https://API20250506035221.azurewebsites.net/realtimeHub")
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
@@ -169,7 +169,7 @@
 
         async function fetchCarDetails(carId) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/detail/${carId}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/detail/${carId}`);
 
             if (response.status === 404) {
                 document.getElementById("car-detail-container").style.display = "none";
@@ -220,7 +220,7 @@
 
     async function fetchRealTimeStatus(carId) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/real-time-status/${carId}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/real-time-status/${carId}`);
             if (!response.ok) throw new Error(await response.text());
 
             const data = await response.json();
@@ -232,7 +232,7 @@
     }
         async function checkRentalStatus(carId) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/is-being-rented?carId=${carId}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/is-being-rented?carId=${carId}`);
             if (!response.ok) throw new Error(await response.text());
 
             const isBeingRented = await response.json();
@@ -297,7 +297,7 @@
         // Để tránh gán sự kiện nhiều lần nếu user mở/đóng modal nhiều lần
         confirmDeleteBtn.onclick = async function () {
             try {
-                const response = await fetchWithAuth(`https://localhost:7191/api/Car/Delete/${carId}`, {
+                const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/Delete/${carId}`, {
                     method: 'DELETE'
                 });
 

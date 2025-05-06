@@ -95,7 +95,7 @@
 
     async function fetchCarDetails(carId) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/detail/${carId}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/detail/${carId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch car details');
             }
@@ -147,7 +147,7 @@
 
     async function fetchCarModels(searchTerm) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/car-models?search=${searchTerm}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/car-models?search=${searchTerm}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch car models');
             }
@@ -265,7 +265,7 @@
         };
 
         try {
-            const response = await fetchWithAuth("https://localhost:7191/api/Car/edit-car", {
+            const response = await fetchWithAuth("https://API20250506035221.azurewebsites.net/api/Car/edit-car", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

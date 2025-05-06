@@ -25,7 +25,7 @@
 
     async function fetchCarsByUserId() {
         try {
-            const response = await fetchWithAuth('https://localhost:7191/api/Car/owner');
+            const response = await fetchWithAuth(https://API20250506035221.azurewebsites.net/api/Car/owner');
 
             if (response.status === 404) {
                 displayCars([]); // Không có xe -> hiển thị thông báo
@@ -86,7 +86,7 @@
 
         addCarBtn.addEventListener("click", async () => {
             try {
-                const response = await fetchWithAuth("https://localhost:7191/api/User/having-driver-license-yet");
+                const response = await fetchWithAuth("https://API20250506035221.azurewebsites.net/api/User/having-driver-license-yet");
                 if (!response.ok) {
                     const error = await response.json();
                     throw new Error(error.detail || `API Error: ${response.statusText}`);

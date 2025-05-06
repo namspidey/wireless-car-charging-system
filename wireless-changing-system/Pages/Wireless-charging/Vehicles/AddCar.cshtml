@@ -90,7 +90,7 @@
     let selectedCarModelId = null;
     async function fetchCarModels(searchTerm) {
         try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/Car/car-models?search=${searchTerm}`);
+            const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/car-models?search=${searchTerm}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch car models');
             }
@@ -209,7 +209,7 @@
         formData.append("CarLicenseBackImage", backImageInput.files[0]);
 
         try {
-            const response = await fetchWithAuth('https://localhost:7191/api/Car/add-car', {
+            const response = await fetchWithAuth('https://API20250506035221.azurewebsites.net/api/Car/add-car', {
                 method: 'POST',
                 body: formData
             });

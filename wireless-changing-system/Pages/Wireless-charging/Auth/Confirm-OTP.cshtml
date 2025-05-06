@@ -151,7 +151,7 @@
             disabledResendLink();
 
             try {
-                const response = await fetch('https://localhost:7191/api/otp/generate', {
+                const response = await fetch('https://API20250506035221.azurewebsites.net/api/otp/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -193,8 +193,8 @@
 
             // Xác định endpoint API theo loại action
             const apiUrl = actionType === 'register'
-                ? 'https://localhost:7191/api/Otp/pending-register'
-                : 'https://localhost:7191/api/Otp/verify_and_create_reset_password_token';
+                ? 'https://API20250506035221.azurewebsites.net/api/Otp/pending-register'
+                : 'https://API20250506035221.azurewebsites.net/api/Otp/verify_and_create_reset_password_token';
 
             const response = await fetch(apiUrl, {
                 method: 'POST',

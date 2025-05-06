@@ -153,7 +153,7 @@
     import { fetchWithAuth } from '/js/apiClient.js';
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7191/realtimeHub")
+        .withUrl("https://API20250506035221.azurewebsites.net/realtimeHub")
         .build();
 
     let previousStatus = null;
@@ -173,7 +173,7 @@
             const carId = new URLSearchParams(window.location.search).get('carId');
             if (!carId) return;
 
-            const res = await fetchWithAuth(`https://localhost:7191/api/Car/real-time-status-for-renter/${carId}`);
+            const res = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/Car/real-time-status-for-renter/${carId}`);
             if (!res.ok) throw new Error("Lỗi API trạng thái");
 
             const data = await res.json();

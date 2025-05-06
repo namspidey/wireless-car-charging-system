@@ -26,7 +26,7 @@ namespace API.Controllers
             _emailService = emailService;
             _otpTemplate = System.IO.File.ReadAllText("Template/OTPEmailTemplate.html");
             _activationTemplate = System.IO.File.ReadAllText("Template/ActivationEmailTemplate.html");
-            _frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "https://localhost:5216";
+            _frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "https://wireless-charging-system.azurewebsites.net";
             _userService = userService;
         }
         [HttpPost("generate")]

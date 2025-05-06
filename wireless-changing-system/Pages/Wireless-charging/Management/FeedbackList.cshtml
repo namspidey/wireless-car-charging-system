@@ -200,7 +200,7 @@
                     pageSize
                 });
 
-                const url = `https://localhost:7191/api/Feedback?${params.toString()}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/Feedback?${params.toString()}`;
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -222,7 +222,7 @@
 
         async function respondToFeedback(selectedFeedbackId, responseContent) {
             try {
-                const url = `https://localhost:7191/api/Feedback/${selectedFeedbackId}/response`;
+                const url = `https://API20250506035221.azurewebsites.net/api/Feedback/${selectedFeedbackId}/response`;
                 const options = {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },

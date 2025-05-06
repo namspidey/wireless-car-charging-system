@@ -179,7 +179,7 @@
                 if(side==='Front'&&this.files[0]){
                     try{
                         const formData=new FormData();formData.append('file',this.files[0]);
-                        const res=await fetch('https://localhost:7191/api/Images/read-qr',{
+                        const res=await fetch('https://API20250506035221.azurewebsites.net/api/Images/read-qr',{
                             method:'POST',
                             headers:{'Accept':'text/plain'},
                             body:formData
@@ -297,7 +297,7 @@
             try{
                 const formData=new FormData(this);
                 formData.append('CaptchaToken', captchaToken); // Thêm captchaToken vào FormData
-                const res=await fetch('https://localhost:7191/api/auth/register',{
+                const res=await fetch('https://API20250506035221.azurewebsites.net/api/auth/register',{
                     method:'POST',
                     body:formData
                 });
@@ -324,7 +324,7 @@
         });
         async function sendActivateEmail(email) {
             try {
-                const res = await fetch('https://localhost:7191/api/otp/generate', {
+                const res = await fetch('https://API20250506035221.azurewebsites.net/api/otp/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ Email: email })

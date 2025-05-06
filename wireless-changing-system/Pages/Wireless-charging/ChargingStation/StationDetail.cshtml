@@ -259,7 +259,7 @@
         // Gọi API lấy thông tin trạm sạc
         async function loadStationData(stationId, currentPage, pageSize) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/Detail/${stationId}?page=${currentPage}&pageSize=${pageSize}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/Detail/${stationId}?page=${currentPage}&pageSize=${pageSize}`;
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -431,7 +431,7 @@
         // Thông tin điểm sạc
         async function loadStationPoints(stationId, currentPage, pageSize) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/Detail/${stationId}?page=${currentPage}&pageSize=${pageSize}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/Detail/${stationId}?page=${currentPage}&pageSize=${pageSize}`;
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -454,7 +454,7 @@
         // Xóa trạm
         async function deleteStation(stationIdToDelete) {
             try {
-                const url = `https://localhost:7191/api/ChargingStation/${stationIdToDelete}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingStation/${stationIdToDelete}`;
                 const options = {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
@@ -481,7 +481,7 @@
         // Xóa điểm sạc
         async function deletePoint(pointIdToDelete) {
             try {
-                const url = `https://localhost:7191/api/ChargingPoint/${pointIdToDelete}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingPoint/${pointIdToDelete}`;
                 const options = {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }
@@ -508,7 +508,7 @@
         // Loaad form update điểm sạc
         async function loadChargingPointToUpdate(pointIdToUpdate) {
             try {
-                const url = `https://localhost:7191/api/ChargingPoint/${pointIdToUpdate}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingPoint/${pointIdToUpdate}`;
                 const options = {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
@@ -541,7 +541,7 @@
         // Update điểm sạc
         async function updateChargingPoint(pointIdToUpdate, updatePointDto) {
             try {
-                const url = `https://localhost:7191/api/ChargingPoint/${pointIdToUpdate}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingPoint/${pointIdToUpdate}`;
                 const options = {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -571,7 +571,7 @@
         // Add điểm sạc
         async function addChargingPoint(stationId, pointDto) {
             try {
-                const url = `https://localhost:7191/api/ChargingPoint/AddPoints?stationId=${stationId}`;
+                const url = `https://API20250506035221.azurewebsites.net/api/ChargingPoint/AddPoints?stationId=${stationId}`;
                 const options = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

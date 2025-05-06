@@ -124,27 +124,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
-// Thêm dịch vụ CORS cho phép tất cả các nguồn truy cập
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAllOrigins",
-//        policy =>
-//        {
-//            policy.WithOrigins("https://localhost:5216", "http://localhost:5216")
-//                  .AllowAnyHeader()   // Cho phép bất kỳ header nào
-//                  .AllowAnyMethod() // Cho phép bất kỳ method nào (GET, POST, PUT, DELETE, v.v.)
-//                  .AllowCredentials();
-//        });
-//});
+//Thêm dịch vụ CORS cho phép tất cả các nguồn truy cập
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAllOrigins",
+       policy =>
+        {
+            policy.WithOrigins("https://localhost:5216", "http://localhost:5216", "https://wireless-charging-system.azurewebsites.net", "http://wireless-charging-system.azurewebsites.net")
+                  .AllowAnyHeader()   // Cho phép bất kỳ header nào
+                  .AllowAnyMethod() // Cho phép bất kỳ method nào (GET, POST, PUT, DELETE, v.v.)
+                  .AllowCredentials();
+        });
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins", policy =>
+//    {
+//        policy.AllowAnyOrigin()
+//              .AllowAnyMethod()
+//              .AllowAnyHeader();
+//    });
+//});
 
 builder.Services.AddAuthorization(options =>
 {
@@ -165,7 +165,7 @@ builder.Services.AddRateLimiter(options =>
     // Tạo policy giới hạn 10 requests/phút cho mỗi IP
     options.AddFixedWindowLimiter("Login", policy =>
     {
-        policy.PermitLimit = 5;
+        policy.PermitLimit = 100;
         policy.Window = TimeSpan.FromMinutes(30);
         policy.QueueLimit = 0;
     });  

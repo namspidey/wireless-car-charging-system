@@ -46,7 +46,7 @@ function notify(message, type = 'info', duration = 2000, topOffset = 20) {
 
 async function performTokenRefresh() {
     try {
-        const refreshResponse = await fetch('https://localhost:7191/api/auth/refresh-token', {
+        const refreshResponse = await fetch('https://API20250506035221.azurewebsites.net/api/auth/refresh-token', {
             method: 'POST',
             credentials: 'include'
         });
@@ -135,7 +135,7 @@ export async function fetchWithAuth(url, options = {}) {
 
 export async function logout() {
     try {
-        await fetch('https://localhost:7191/api/auth/logout', {
+        await fetch('https://API20250506035221.azurewebsites.net/api/auth/logout', {
             method: 'POST',
             credentials: 'include'
         });

@@ -199,7 +199,7 @@
             
             // Fetch documents from API
             function fetchDocuments() {
-                let url = `https://localhost:7191/api/DocumentReview/by-type?type=${currentType}&page=${currentPage}&pageSize=${pageSize}`;
+                let url = `https://API20250506035221.azurewebsites.net/api/DocumentReview/by-type?type=${currentType}&page=${currentPage}&pageSize=${pageSize}`;
 
                 if (currentStatus != null) {
                     url += `&status=${currentStatus}`;
@@ -347,7 +347,7 @@
                 try {
                     resetHiddenFields();
 
-                    const response = await fetchWithAuth(`https://localhost:7191/api/DocumentReview/${id}`, {
+                    const response = await fetchWithAuth(`https://API20250506035221.azurewebsites.net/api/DocumentReview/${id}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' }
                     });
@@ -441,7 +441,7 @@
                     type: currentType
                 };
                 
-                fetchWithAuth('https://localhost:7191/api/DocumentReview/update-review', {
+                fetchWithAuth('https://API20250506035221.azurewebsites.net/api/DocumentReview/update-review', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
