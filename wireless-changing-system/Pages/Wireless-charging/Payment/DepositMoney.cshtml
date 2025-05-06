@@ -80,7 +80,7 @@
     async function taoLinkThanhToan() {
         const thanhtien = parseInt(document.getElementById("txtThanhTien").value);
         if (!thanhtien || thanhtien <= 0) {
-            alert("Vui lòng nhập số tiền hợp lệ!");
+            showToast("Vui lòng nhập số tiền hợp lệ!");
             return;
         }
 
@@ -132,7 +132,7 @@
                 statusElement.innerText = "Thanh toán thất bại!";
                 return;
             } else {
-                if (retryCount < 60) {
+                if (retryCount < 100) {
                     setTimeout(() => checkPaymentStatus(orderId, retryCount + 1), 5000);
                 } else {
                     statusElement.innerText = "Hết thời gian chờ thanh toán!";

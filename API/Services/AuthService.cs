@@ -40,6 +40,16 @@ namespace API.Services
                 throw new ArgumentException("Password không thể trống hoặc khoảng trắng",nameof(request.Password));
             }
             var user = await _userRepository.GetUserByEmail(request.Email);
+            var refreshtokenNeedRevole = user!.RefreshTokens
+                .OrderByDescending(rt => rt.CreatedAt) 
+                .FirstOrDefault(); 
+            if (refreshtokenNeedRevole != null)
+            {
+                if (refreshtokenNeedRevole.Revoked!= true)
+                {
+                    await RevokeRefreshTokenNoHash(refreshtokenNeedRevole.Token!);
+                }
+            }
             if (request.Email.Length > 225) 
             {
                 throw new ArgumentException("Email không được vượt quá 225 ký tự.", nameof(request.Email));
@@ -152,10 +162,20 @@ namespace API.Services
             }
 
         }
-        public async Task RevokeRefreshToken(string token)
+        private async Task RevokeRefreshToken(string token)
         {
             var tokenHash = HashToken(token);
             var refreshToken = await _authRepository.FindRefreshToken(tokenHash);
+            if (refreshToken != null)
+            {
+                refreshToken.Revoked = true;
+                await _authRepository.UpdateRefreshTokenAsync(refreshToken);
+            }
+
+        }      
+        private async Task RevokeRefreshTokenNoHash(string token)
+        {
+            var refreshToken = await _authRepository.FindRefreshToken(token);
             if (refreshToken != null)
             {
                 refreshToken.Revoked = true;

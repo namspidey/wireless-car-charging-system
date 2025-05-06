@@ -61,6 +61,7 @@ namespace DataAccess.Repositories
                 .Include(u => u.Role)
                 .Include(u => u.Cccds)
                 .Include(u => u.DriverLicenses)
+                .Include(u=> u.RefreshTokens)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Email == email);
         }

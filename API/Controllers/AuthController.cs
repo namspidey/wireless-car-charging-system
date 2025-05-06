@@ -66,10 +66,7 @@ namespace API.Controllers
         {
             try
             {
-                if (Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
-                {
-                    await _authService.RevokeRefreshToken(refreshToken);
-                }
+
                 var response = await _authService.Authenticate(request);
                 if (response == null)
                 {
