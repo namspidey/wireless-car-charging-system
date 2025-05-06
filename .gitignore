@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 
 /API/.env
+/API/.config/dotnet-tools.json
+/API/Properties/ServiceDependencies/API20250506035221 - Web Deploy
+/API/Properties/ServiceDependencies/local
+/API/Properties
