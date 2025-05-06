@@ -28,11 +28,29 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult getAllRoles()
         {
-            var roles = _testService.GetAllRoles();
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return new JsonResult(roles);
-        }
+            try
+            {
+                // Gọi service để lấy dữ liệu
+                var roles = _testService.GetAllRoles();
 
+                // Kiểm tra dữ liệu trả về
+                if (roles == null || roles.Count == 0)
+                    return Ok(new { Message = "Không có dữ liệu." }); // Trả về JSON thay vì string
+
+                return Ok(roles);
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi
+                return StatusCode(500, new { Error = "Lỗi server" });
+            }
+        }
+        [AllowAnonymous]
+        [HttpGet("message")]
+        public ActionResult GetTestMessage()
+        {
+            return Content("ssssssssssssssssssssssssssssssssssss", "text/plain");
+        }
 
         [Authorize("AdminOrOperator")]
         [HttpPost("create-test-user")]

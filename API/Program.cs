@@ -20,6 +20,7 @@ using DataAccess.Repositories.StationRepo;
 using API.Hubs;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
+using Microsoft.OpenApi.Models;
 
 
 
@@ -27,7 +28,7 @@ using System.Threading.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 //builder.Services.AddSingleton<SqlDependencyService>();
-builder.Services.AddHostedService<SqlDependencyService>();
+//builder.Services.AddHostedService<SqlDependencyService>();
 
 //=================================
 // Cloudinary configuration
@@ -124,16 +125,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 // Thêm dịch vụ CORS cho phép tất cả các nguồn truy cập
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        policy =>
+//        {
+//            policy.WithOrigins("https://localhost:5216", "http://localhost:5216")
+//                  .AllowAnyHeader()   // Cho phép bất kỳ header nào
+//                  .AllowAnyMethod() // Cho phép bất kỳ method nào (GET, POST, PUT, DELETE, v.v.)
+//                  .AllowCredentials();
+//        });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        policy =>
-        {
-            policy.WithOrigins("https://localhost:5216", "http://localhost:5216")
-                  .AllowAnyHeader()   // Cho phép bất kỳ header nào
-                  .AllowAnyMethod() // Cho phép bất kỳ method nào (GET, POST, PUT, DELETE, v.v.)
-                  .AllowCredentials();
-        });
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
 builder.Services.AddAuthorization(options =>
@@ -148,9 +158,7 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
 //Ratelimit
 builder.Services.AddRateLimiter(options =>
 {
@@ -181,12 +189,50 @@ builder.Services.AddRateLimiter(options =>
         });
     };
 });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    // 1) Core metadata
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "My API",
+        Version = "v1",
+        Description = "Your API description here"
+    });
 
+    // 2) JWT Bearer definition
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme.\n\n"
+                    + "Enter: **Bearer <your JWT token>**",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    // 3) Apply globally (all endpoints)
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id   = "Bearer"
+                },
+                Scheme = "Bearer",
+                Name   = "Authorization",
+                In     = ParameterLocation.Header
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 //=======================================
 var app = builder.Build();
-app.UseCors("AllowAllOrigins");
-app.UseRouting();
 
 //var sqlDependencyService = app.Services.GetRequiredService<SqlDependencyService>();
 //sqlDependencyService.StartListening();
@@ -200,10 +246,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseRateLimiter();
+app.UseCors("AllowAllOrigins");
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
+app.UseRateLimiter();
 
 app.UseEndpoints(endpoints =>
 {
