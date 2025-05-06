@@ -45,9 +45,27 @@
 <script type="module">
     import { fetchWithAuth } from '/js/apiClient.js';
     document.addEventListener("DOMContentLoaded", async function () {
+        await updateExpiredRentals();
         await loadRentRequests();
     });
 
+        async function updateExpiredRentals() {
+        const apiUrl = `https://localhost:7191/api/Car/update-expired-rentals`;
+
+        try {
+            const response = await fetchWithAuth(apiUrl, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Lỗi khi cập nhật thuê xe hết hạn: ${response.statusText}`);
+            }
+            console.log('Cập nhật thuê xe hết hạn thành công.');
+        } catch (error) {
+            console.error("Lỗi khi cập nhật thuê xe hết hạn:", error);
+        }
+    }
         async function loadRentRequests() {
         const apiUrl = `https://localhost:7191/api/Car/rent-requests`;
         const container = document.getElementById("rentConfirmContainer");

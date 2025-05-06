@@ -537,5 +537,32 @@ namespace DataAccess.Repositories.CarRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateExpiredRentalsAsync()
+        {
+            var now = DateTime.Now;
+            var expiredRents = await _context.UserCars
+                .Where(uc => uc.Role == "Renter" && uc.EndDate <= now && uc.IsAllowedToCharge == true)
+                .ToListAsync();
+
+            foreach (var rent in expiredRents)
+            {
+                rent.IsAllowedToCharge = false;
+            }
+
+            if (expiredRents.Any())
+            {
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Car?> GetCarById(int id)
+        {
+            return await _context.Cars
+                .Include(c => c.CarModel)
+                .Include(c => c.UserCars).ThenInclude(uc => uc.User)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.CarId == id);
+        }
     }
 }

@@ -120,6 +120,8 @@
                     <p id="docAddressRow" hidden><strong>Địa chỉ:</strong> <span id="docAddress"></span></p>
                     <p id="docGenderRow" hidden><strong>Giới tính:</strong> <span id="docGender"></span></p>
                     <p id="docClassRow" hidden><strong>Hạng:</strong> <span id="docClass"></span></p>
+                    <p id="docBrandRow" hidden><strong>Hãng xe:</strong> <span id="docBrand"></span></p>
+                    <p id="docColorRow" hidden><strong>Màu:</strong> <span id="docColor"></span></p>
                     <p><strong>Ghi chú:</strong> <span id="docComment"></span></p>
                     <div class="row">
                         <div class="col-md-6">
@@ -251,20 +253,17 @@
                     
                     // Format date
                     const submitDate = new Date(doc.submittedAt).toLocaleString();
-                    let actionButton;
+
+                    let actionButton = `
+                        <button class="btn btn-info btn-sm view-details-btn" data-id="${doc.id}">
+                            Chi tiết
+                        </button>
+                    `;
+
                     if (doc.status === "PENDING") {
-                        actionButton = `
-                            <button class="btn btn-info btn-sm view-details-btn" data-id="${doc.id}">
-                                Chi tiết
-                            </button>
+                        actionButton += `
                             <button class="btn btn-primary btn-sm review-btn" data-id="${doc.id}">
                                 Xét duyệt
-                            </button>
-                        `;
-                    } else {
-                        actionButton = `
-                            <button class="btn btn-info btn-sm view-details-btn" data-id="${doc.id}">
-                                Chi tiết
                             </button>
                         `;
                     }
@@ -387,16 +386,18 @@
                         document.getElementById('docAddressRow').hidden = false;
                         document.getElementById('docClassRow').hidden = false;
                     }
+
                     if (currentType === "CAR_LICENSE") {
-                        document.getElementById('docName').textContent = getDocumentTypeName(data.fullName);
-                       
+                        document.getElementById('docName').textContent = getDocumentTypeName(data.fullName);                      
                         document.getElementById('docAddress').textContent = data.address;
-                       
-                        document.getElementById('docNameRow').hidden = false;
-                       
+                        document.getElementById('docBrand').textContent = data.brand;
+                        document.getElementById('docColor').textContent = translateColorToVietnamese(data.color);
+                        document.getElementById('docNameRow').hidden = false;                      
                         document.getElementById('docAddressRow').hidden = false;
-                       
+                        document.getElementById('docBrandRow').hidden = false;
+                        document.getElementById('docColorRow').hidden = false;                      
                     }
+
                     // Hiển thị modal
                     const detailModal = new bootstrap.Modal(document.getElementById('documentDetailModal'));
                     detailModal.show();
@@ -422,6 +423,8 @@
                 document.getElementById('docAddressRow').hidden = true;
                 document.getElementById('docGenderRow').hidden = true;
                 document.getElementById('docClassRow').hidden = true;
+                document.getElementById('docBrandRow').hidden = true;
+                document.getElementById('docColorRow').hidden = true;
             }
 
             
@@ -461,6 +464,26 @@
                     showToast("Đã có lỗi khi cập nhật trạng thái");
                 })
             });
+
+            function translateColorToVietnamese(color) {
+                const colorMap = {
+                    "black": "Đen",
+                    "white": "Trắng",
+                    "red": "Đỏ",
+                    "blue": "Xanh dương",
+                    "green": "Xanh lá",
+                    "yellow": "Vàng",
+                    "silver": "Bạc",
+                    "gray": "Xám",
+                    "brown": "Nâu",
+                    "orange": "Cam",
+                    "pink": "Hồng",
+                    "purple": "Tím"
+                };
+
+                return colorMap[color.toLowerCase()] || color; // fallback nếu không có trong map
+            }
+
         });
     </script>
 </body>

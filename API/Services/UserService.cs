@@ -1060,9 +1060,9 @@ namespace API.Services
             return token;
         }
 
-        public Task<bool> HavingDriverLicenseYet(int userId)
+        public async Task<bool> HavingDriverLicenseYet(int userId)
         {
-            return _userRepository.HavingDriverLicenseYet(userId);
+            return await _userRepository.HavingDriverLicenseYet(userId);
         }
     }
 }

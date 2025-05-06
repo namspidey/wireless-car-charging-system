@@ -32,6 +32,8 @@ namespace DataAccess.DTOs
         public string Address { get; set; }
         public string Gender { get; set; }
         public string Class { get; set; }
+        public string Brand { get; set; }
+        public string Color { get; set; }
     }
 
 

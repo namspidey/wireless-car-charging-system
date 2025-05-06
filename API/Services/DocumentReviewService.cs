@@ -105,9 +105,11 @@ namespace API.Services
 
             if (document.CarId.HasValue)
             {
-                var car = _carRepo.getCarDetailById(document.CarId.Value);
+                var car = await _carRepo.GetCarById(document.CarId.Value);
                 if (car == null)
                     return null;
+
+                var user = car.UserCars.FirstOrDefault()?.User;
 
                 return new DocumentDetailDto
                 {
@@ -115,15 +117,14 @@ namespace API.Services
                     DocumentId = car.CarId,
                     Code = car.LicensePlate,
                     Comments = document.Comments,
-                    ImageFront = car.CarImgFront,
-                    ImageBack = car.CarImgBack,
-                    FullName = car.OwnerName,
-                    Address = car.OwnerAddress
+                    ImageFront = car.ImgFront,
+                    ImageBack = car.ImgBack,
+                    FullName = user.Fullname,
+                    Address = user.Address,
+                    Brand = car.CarModel.Brand,
+                    Color = car.CarModel.Color
                 };
             }
-
-            
-
 
             return null;
         }

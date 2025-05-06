@@ -406,6 +406,22 @@
         <p class="mb-0"></p>
     </div>
 </div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="confirmMessage"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirmOkButton">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="module">
     import { fetchWithAuth } from '/js/apiClient.js';
 
@@ -525,21 +541,34 @@
         container.appendChild(licenseItem);
         });
     }
+    const confirmModalEl = document.getElementById('confirmModal');
+       const confirmModal = new bootstrap.Modal(confirmModalEl);
+       let confirmCallback = null;
+       document.getElementById('confirmOkButton').addEventListener('click', () => {
+           if (confirmCallback) confirmCallback();
+           confirmModal.hide();
+       });
+       function showConfirm(message, callback) {
+           document.getElementById('confirmMessage').textContent = message;
+           confirmCallback = callback;
+           confirmModal.show();
+       }
 
     async function deleteLicense(licenseCode) {
-        if (!confirm('Bạn có chắc chắn muốn xóa bằng lái này?')) return;
-        try {
-            const response = await fetchWithAuth(`https://localhost:7191/api/user/driver-licenses/${licenseCode}`, {
-                method: 'DELETE'
-            });
-             const result = await response.json(); 
-              if (!response.ok) {
-                  throw new Error(result.detail || 'Lỗi không xác định');
-              }
-            await loadDriverLicenses();
-        } catch (error) {
-            showToast(error.message);
-        }
+        showConfirm(`Xác nhận xóa bằng lái ${licenseCode}?`, async () => {
+            try {
+                const response = await fetchWithAuth(
+                    `https://localhost:7191/api/user/driver-licenses/${encodeURIComponent(licenseCode)}`,
+                    { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
+                );
+                if (!response.ok) throw new Error((await response.json()).detail || `HTTP error! status: ${response.status}`);
+                showSuccessToast("Vô hiệu hóa thành công!");
+                await loadLicenses(currentPage);
+            } catch (error) {
+                showToast(error.message);
+                console.error('Error deactivating:', error);
+            }
+        });
     }
      let isFrontQRValid = false;
      let isBackQRValid = false;
@@ -607,7 +636,7 @@
                     loadingOverlay.style.display = 'flex';
                     const formData = new FormData(form);
                     const backImg=form.elements.backImage.files[0];
-                    const fontImg=form.elements.backImage.files[0];
+                    const fontImg=form.elements.frontImage.files[0];
                     if (!backImg || !fontImg) {
                         showToast('Vui lòng chọn ảnh');
                         loadingOverlay.style.display = 'none';
@@ -682,7 +711,7 @@
             const formData = new FormData(form);
 
             const backImg=form.elements.backImage.files[0];
-            const fontImg=form.elements.backImage.files[0];
+            const fontImg=form.elements.frontImage.files[0];
             if (!backImg || !fontImg) {
                 showToast('Vui lòng chọn ảnh');
                 loadingOverlay.style.display = 'none';

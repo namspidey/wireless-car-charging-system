@@ -337,5 +337,10 @@ namespace API.Services
                 Types = _myCars.GetAllTypes()
             };
         }
+
+        public async Task UpdateExpiredRentalsAsync()
+        {
+             await _myCars.UpdateExpiredRentalsAsync();
+        }
     }
 }

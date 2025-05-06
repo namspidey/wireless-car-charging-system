@@ -457,7 +457,7 @@ namespace API.Controllers
                 });
             }
             int userId = int.Parse(userIdClaim.Trim());
-            var result = _userService.HavingDriverLicenseYet(userId);
+            var result =await _userService.HavingDriverLicenseYet(userId);
             return Ok(result);
         }
     }

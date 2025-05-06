@@ -8,8 +8,7 @@ namespace DataAccess.DTOs.CarDTO
 {
     public class ChargingStatusDTO
     {
-        public int SessionId { get; set; }
-
+       
         public int? CarId { get; set; }
 
         public int? ChargingPointId { get; set; }

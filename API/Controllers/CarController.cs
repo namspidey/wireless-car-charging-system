@@ -394,5 +394,12 @@ namespace API.Controllers
             var result = _carService.GetFilterOptions();
             return Ok(result);
         }
+
+        [HttpPut("update-expired-rentals")]
+        public async Task<IActionResult> UpdateExpiredRentals()
+        {
+            await _carService.UpdateExpiredRentalsAsync();
+            return Ok();
+        }
     }
 }
